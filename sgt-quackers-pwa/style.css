@@ -1,0 +1,974 @@
+*{
+
+    box-sizing:border-box;
+
+}
+
+
+
+html,
+body{
+
+    margin:0;
+
+    padding:0;
+
+    overflow:hidden;
+
+    background:#0b0f19;
+
+    font-family:
+    "Courier New",
+    monospace;
+
+}
+
+
+
+
+canvas{
+
+    display:block;
+
+    width:100vw;
+
+    height:100vh;
+
+}
+
+
+
+
+
+/* ==================================
+   INTRO VIDEO
+================================== */
+
+
+#introScreen{
+
+    position:absolute;
+
+    inset:0;
+
+    background:#000;
+
+    z-index:100;
+
+
+}
+
+
+
+#introVideo{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+
+}
+
+
+
+
+
+/* ==================================
+   TITLE SCREEN
+================================== */
+
+
+#titleScreen{
+
+    position:absolute;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    background:#050812;
+
+    overflow:hidden;
+
+    z-index:90;
+
+}
+
+
+
+
+
+#splashGif{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    z-index:-1;
+
+
+}
+
+
+
+
+
+
+#titleScreen::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    repeating-linear-gradient(
+
+        0deg,
+
+        rgba(0,240,255,.05),
+
+        rgba(0,240,255,.05) 1px,
+
+        transparent 1px,
+
+        transparent 4px
+
+    );
+
+    pointer-events:none;
+
+
+}
+
+
+
+
+
+
+
+/* ==================================
+   BOOT SYSTEM
+================================== */
+
+
+#bootOverlay{
+
+    position:absolute;
+
+    bottom:180px;
+
+    width:420px;
+
+    text-align:center;
+
+    color:#00f0ff;
+
+    text-shadow:
+
+    0 0 10px #00f0ff;
+
+
+}
+
+
+
+
+
+#systemStatus{
+
+    font-size:22px;
+
+    letter-spacing:3px;
+
+    margin-bottom:18px;
+
+
+}
+
+
+
+
+
+
+#loadingContainer{
+
+    width:100%;
+
+
+}
+
+
+
+
+
+#loadingBar{
+
+    height:22px;
+
+    border:
+
+    2px solid #00f0ff;
+
+    background:
+
+    rgba(0,0,0,.6);
+
+    padding:3px;
+
+    box-shadow:
+
+    0 0 15px #00f0ff;
+
+
+}
+
+
+
+
+#loadingFill{
+
+    width:0%;
+
+    height:100%;
+
+    background:#00f0ff;
+
+    box-shadow:
+
+    0 0 15px #00f0ff;
+
+    transition:
+
+    width .2s linear;
+
+
+}
+
+
+
+
+#loadingPercent{
+
+    margin-top:10px;
+
+    font-size:18px;
+
+
+}
+
+
+
+
+
+
+
+/* ==================================
+   PLAY BUTTON
+================================== */
+
+
+#play{
+
+    position:absolute;
+
+    bottom:90px;
+
+    padding:18px 55px;
+
+    font-size:24px;
+
+    letter-spacing:4px;
+
+    color:#00f0ff;
+
+    background:
+
+    rgba(0,0,0,.35);
+
+    border:
+
+    2px solid #00f0ff;
+
+    border-radius:0;
+
+    cursor:pointer;
+
+    text-shadow:
+
+    0 0 8px #00f0ff;
+
+
+    box-shadow:
+
+    0 0 20px rgba(0,240,255,.8);
+
+
+    transition:.3s;
+
+
+}
+
+
+
+
+#play:hover:not(:disabled){
+
+    background:
+
+    rgba(0,240,255,.15);
+
+    transform:scale(1.05);
+
+
+}
+
+
+
+
+#play:disabled{
+
+    opacity:.4;
+
+    cursor:not-allowed;
+
+
+}
+
+
+
+
+
+
+
+/* ==================================
+   COPYRIGHT
+================================== */
+
+
+#copyright{
+
+    position:absolute;
+
+    bottom:20px;
+
+    text-align:center;
+
+    color:#00f0ff;
+
+    font-size:14px;
+
+    letter-spacing:2px;
+
+    opacity:.8;
+
+    text-shadow:
+
+    0 0 8px #00f0ff;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==================================
+   HUD
+================================== */
+
+
+#hud{
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:5;
+
+    color:#00f0ff;
+
+    font-size:22px;
+
+
+}
+
+
+
+
+
+#topLeftHud,
+#sectorHud,
+#weaponHud,
+#healthHud{
+
+
+    background:
+
+    rgba(11,15,25,.85);
+
+
+    border:
+
+    2px solid #00f0ff;
+
+
+    padding:12px 18px;
+
+
+    text-shadow:
+
+    0 0 8px #00f0ff;
+
+
+}
+
+
+
+
+
+#topLeftHud{
+
+    position:absolute;
+
+    top:20px;
+
+    left:20px;
+
+
+}
+
+
+
+#sectorHud{
+
+    position:absolute;
+
+    top:20px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+
+}
+
+
+
+
+#weaponHud{
+
+    position:absolute;
+
+    right:20px;
+
+    bottom:20px;
+
+    text-align:right;
+
+
+}
+
+
+
+#weapon{
+
+    color:#ffaa00;
+
+    font-size:26px;
+
+
+}
+
+
+
+
+#healthHud{
+
+    position:absolute;
+
+    left:20px;
+
+    bottom:20px;
+
+    width:260px;
+
+
+}
+
+
+
+#healthBar{
+
+    height:22px;
+
+    border:
+
+    2px solid #00f0ff;
+
+    margin-top:8px;
+
+
+}
+
+
+
+#healthFill{
+
+    height:100%;
+
+    width:100%;
+
+    background:#00f0ff;
+
+
+}
+
+
+
+
+#muteButton{
+
+    position:absolute;
+
+    top:20px;
+
+    right:20px;
+
+    pointer-events:auto;
+
+    padding:10px;
+
+    font-size:20px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==================================
+   GAME OVER
+================================== */
+
+
+#gameOver{
+
+    position:absolute;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    background:
+
+    radial-gradient(
+        circle at center,
+        rgba(255,85,0,.18),
+        rgba(5,8,18,.97)
+    );
+
+
+    z-index:50;
+
+    overflow:hidden;
+
+    text-align:center;
+
+    color:#ff5500;
+
+
+}
+
+
+
+
+
+/* cyber scan overlay */
+
+#gameOver::before{
+
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+
+    background:
+
+    repeating-linear-gradient(
+
+        0deg,
+
+        rgba(255,85,0,.08),
+
+        rgba(255,85,0,.08) 1px,
+
+        transparent 2px,
+
+        transparent 5px
+
+    );
+
+
+    animation:
+
+    gameOverScan 4s linear infinite;
+
+
+    pointer-events:none;
+
+
+}
+
+
+
+
+@keyframes gameOverScan{
+
+
+    from{
+
+        transform:translateY(0);
+
+    }
+
+
+    to{
+
+        transform:translateY(25px);
+
+    }
+
+
+}
+
+
+
+
+
+
+
+/* flame glow title */
+
+
+#gameOver h1{
+
+
+    position:relative;
+
+
+    margin:0;
+
+
+    font-family:
+
+    "Orbitron",
+
+    "Courier New",
+
+    monospace;
+
+
+    font-size:72px;
+
+
+    font-weight:900;
+
+
+    letter-spacing:12px;
+
+
+    color:#ff5500;
+
+
+    text-transform:uppercase;
+
+
+    text-shadow:
+
+
+    0 0 8px #ff5500,
+
+    0 0 20px #ff3300,
+
+    0 0 45px #ff0000;
+
+
+
+    animation:
+
+    flamePulse 2s infinite alternate;
+
+
+}
+
+
+
+
+
+@keyframes flamePulse{
+
+
+    from{
+
+
+        filter:
+
+        brightness(1);
+
+
+    }
+
+
+    to{
+
+
+        filter:
+
+        brightness(1.45);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+#gameOverSubtitle{
+
+
+    position:relative;
+
+
+    margin-top:20px;
+
+
+    margin-bottom:45px;
+
+
+    font-family:
+
+    "Courier New",
+
+    monospace;
+
+
+    font-size:20px;
+
+
+    letter-spacing:3px;
+
+
+    color:#ffaa00;
+
+
+    text-shadow:
+
+
+    0 0 10px #ffaa00;
+
+
+}
+
+
+
+
+
+
+
+/* results panel */
+
+
+#results{
+
+
+    position:relative;
+
+
+    padding:
+
+    25px 50px;
+
+
+    background:
+
+    rgba(11,15,25,.8);
+
+
+
+    border:
+
+    2px solid #00f0ff;
+
+
+
+    color:#00f0ff;
+
+
+    font-family:
+
+    "Courier New",
+
+    monospace;
+
+
+    font-size:24px;
+
+
+    line-height:2;
+
+
+
+    box-shadow:
+
+
+    0 0 20px rgba(0,240,255,.5);
+
+
+}
+
+
+
+
+
+
+
+/* burn another day button */
+
+
+#redeploy{
+
+
+    position:relative;
+
+
+    margin-top:45px;
+
+
+    padding:
+
+    18px 55px;
+
+
+
+    background:
+
+    rgba(255,85,0,.08);
+
+
+
+    border:
+
+    2px solid #ff5500;
+
+
+
+    color:#ff5500;
+
+
+
+    font-family:
+
+    "Orbitron",
+
+    "Courier New",
+
+    monospace;
+
+
+
+    font-size:22px;
+
+
+    letter-spacing:4px;
+
+
+    cursor:pointer;
+
+
+
+    text-shadow:
+
+
+    0 0 10px #ff5500;
+
+
+
+    box-shadow:
+
+
+    0 0 20px #ff5500;
+
+
+
+    transition:.3s;
+
+
+}
+
+
+
+
+#redeploy:hover{
+
+
+    background:
+
+    rgba(255,85,0,.25);
+
+
+
+    transform:
+
+    scale(1.05);
+
+
+
+    box-shadow:
+
+
+    0 0 40px #ff5500;
+
+
+}
