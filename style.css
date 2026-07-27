@@ -1,7 +1,7 @@
 /* ==========================================================
    Sgt. Quackers: Burn Another Day
    style.css
-   Landscape Arcade UI
+   Cyber Arcade Landscape UI
 ========================================================== */
 
 
@@ -21,15 +21,20 @@ body{
 
     padding:0;
 
+
     width:100%;
 
     height:100%;
 
+
     overflow:hidden;
+
 
     background:#0b0f19;
 
+
     touch-action:none;
+
 
     font-family:
 
@@ -50,16 +55,20 @@ canvas{
 
     position:absolute;
 
+
     inset:0;
+
 
     width:100%;
 
     height:100%;
 
+
     display:block;
 
 
 }
+
 
 
 
@@ -77,28 +86,42 @@ canvas{
 
     position:absolute;
 
+
     inset:0;
+
 
     background:#000;
 
-    z-index:100;
+
+    z-index:200;
 
 
 }
+
 
 
 
 #introVideo{
 
 
-    width:100%;
+    position:absolute;
 
-    height:100%;
+
+    inset:0;
+
+
+    width:100vw;
+
+
+    height:100vh;
+
 
     object-fit:cover;
 
 
 }
+
+
 
 
 
@@ -116,26 +139,37 @@ canvas{
 
     position:absolute;
 
+
     inset:0;
+
+
+    z-index:100;
+
 
     display:flex;
 
-    flex-direction:column;
+
+    align-items:flex-end;
+
 
     justify-content:flex-end;
 
-    align-items:center;
 
-    padding-bottom:4vh;
+    padding:
 
-    background:#0b0f19;
+    0 4vw 6vh 0;
 
-    z-index:50;
 
     overflow:hidden;
 
 
+    background:#0b0f19;
+
+
 }
+
+
+
 
 
 
@@ -145,11 +179,15 @@ canvas{
 
     position:absolute;
 
+
     inset:0;
+
 
     width:100%;
 
+
     height:100%;
+
 
     object-fit:cover;
 
@@ -160,22 +198,37 @@ canvas{
 
 
 
+
+
+
+
+/* ==========================================================
+   BOOT PANEL
+========================================================== */
+
+
 #bootOverlay{
+
 
     position:absolute;
 
+
     right:4vw;
 
-    bottom:18vh;
 
-    width:min(32vw,360px);
+    bottom:20vh;
+
+
+    width:min(32vw,380px);
+
 
     text-align:right;
 
-    z-index:2;
+
+    z-index:5;
+
 
 }
-
 
 
 
@@ -185,18 +238,42 @@ canvas{
 
     color:#00f0ff;
 
-    font-size:clamp(10px,1.4vw,18px);
+
+    font-size:
+
+
+    clamp(11px,1.4vw,18px);
+
+
 
     letter-spacing:3px;
 
-    margin-bottom:10px;
 
     text-shadow:
+
 
     0 0 10px #00f0ff;
 
 
+    margin-bottom:10px;
+
+
 }
+
+
+
+
+
+
+
+#loadingContainer{
+
+
+    width:100%;
+
+
+}
+
 
 
 
@@ -205,23 +282,29 @@ canvas{
 
 #loadingBar{
 
+
     width:100%;
 
-    height:6px;
 
-    margin-left:auto;
+    height:7px;
+
 
     background:#111827;
+
 
     border:
 
     1px solid #00f0ff;
 
+
     box-shadow:
+
 
     0 0 12px #00f0ff;
 
+
 }
+
 
 
 
@@ -229,13 +312,17 @@ canvas{
 #loadingFill{
 
 
+    width:0%;
+
+
     height:100%;
 
-    width:0%;
 
     background:#00f0ff;
 
+
     box-shadow:
+
 
     0 0 15px #00f0ff;
 
@@ -245,12 +332,15 @@ canvas{
 
 
 
+
 #loadingPercent{
 
 
     margin-top:5px;
 
+
     color:#ffaa00;
+
 
     font-size:12px;
 
@@ -263,6 +353,13 @@ canvas{
 
 
 
+
+
+/* ==========================================================
+   INITIATE BUTTON
+========================================================== */
+
+
 #play{
 
 
@@ -272,17 +369,16 @@ canvas{
     right:4vw;
 
 
-    bottom:6vh;
+    bottom:8vh;
 
 
-
-    z-index:5;
-
+    z-index:10;
 
 
     padding:
 
-    12px 42px;
+
+    10px 34px;
 
 
 
@@ -302,38 +398,36 @@ canvas{
 
 
 
+    letter-spacing:3px;
+
+
+
     font-size:
 
-    clamp(12px,1.8vw,20px);
 
-
-
-    letter-spacing:3px;
+    clamp(12px,1.6vw,20px);
 
 
 
     box-shadow:
 
-    0 0 20px #00f0ff;
 
+    0 0 18px #00f0ff;
 
-
-    cursor:pointer;
 
 
 }
-
-
-
 
 
 
 #play:disabled{
 
 
-    opacity:.5;
+    opacity:.45;
+
 
 }
+
 
 
 
@@ -344,23 +438,39 @@ canvas{
 #copyright{
 
 
-    position:relative;
+    position:absolute;
 
-    z-index:3;
+
+    right:4vw;
+
+
+    bottom:2vh;
+
+
+    z-index:10;
+
+
+
+    text-align:right;
+
 
     color:#94a3b8;
 
+
+
     font-size:
+
 
     clamp(8px,1vw,12px);
 
 
-    text-align:center;
 
     letter-spacing:2px;
 
 
 }
+
+
 
 
 
@@ -378,19 +488,30 @@ canvas{
 
     position:absolute;
 
+
     inset:0;
 
-    z-index:20;
+
+    z-index:50;
+
 
     pointer-events:none;
 
+
     color:#00f0ff;
+
 
     font-size:
 
-    clamp(10px,1.3vw,16px);
+
+    clamp(10px,1.2vw,16px);
+
+
 
 }
+
+
+
 
 
 
@@ -399,12 +520,21 @@ canvas{
 
     position:absolute;
 
-    top:12px;
 
-    left:15px;
+    top:15px;
+
+
+    left:18px;
+
+
+    text-shadow:
+
+
+    0 0 8px #00f0ff;
 
 
 }
+
 
 
 
@@ -413,9 +543,12 @@ canvas{
 
     position:absolute;
 
-    top:12px;
+
+    top:15px;
+
 
     left:50%;
+
 
     transform:translateX(-50%);
 
@@ -430,9 +563,12 @@ canvas{
 
     position:absolute;
 
-    top:12px;
 
-    right:15px;
+    top:15px;
+
+
+    right:18px;
+
 
     text-align:right;
 
@@ -441,17 +577,23 @@ canvas{
 
 
 
+
+
 #healthHud{
 
 
     position:absolute;
 
+
     bottom:15px;
 
-    left:15px;
+
+    left:18px;
 
 
 }
+
+
 
 
 
@@ -460,10 +602,13 @@ canvas{
 
     width:
 
+
     clamp(120px,18vw,220px);
 
 
-    height:10px;
+
+    height:8px;
+
 
     border:
 
@@ -475,13 +620,14 @@ canvas{
 
 
 
-
 #healthFill{
+
+
+    width:100%;
 
 
     height:100%;
 
-    width:100%;
 
     background:#00f0ff;
 
@@ -492,14 +638,17 @@ canvas{
 
 
 
+
 #muteButton{
 
 
     position:absolute;
 
-    bottom:15px;
 
-    right:15px;
+    right:18px;
+
+
+    bottom:15px;
 
 
     pointer-events:auto;
@@ -507,7 +656,8 @@ canvas{
 
     background:
 
-    rgba(11,15,25,.7);
+    rgba(11,15,25,.75);
+
 
 
     border:
@@ -515,13 +665,16 @@ canvas{
     1px solid #00f0ff;
 
 
+
     color:#00f0ff;
 
 
-    padding:8px 12px;
+
+    padding:6px 10px;
 
 
 }
+
 
 
 
@@ -540,36 +693,48 @@ canvas{
 
     position:absolute;
 
+
     inset:0;
+
+
+    z-index:150;
+
 
     display:none;
 
+
     flex-direction:column;
 
+
     justify-content:center;
+
 
     align-items:center;
 
 
+
+    text-align:center;
+
+
+
     background:
+
 
     radial-gradient(
 
     circle,
 
-    rgba(255,85,0,.25),
+    rgba(255,80,0,.3),
 
     rgba(11,15,25,.97)
 
     );
 
 
-    z-index:80;
-
-    text-align:center;
-
 
 }
+
+
 
 
 
@@ -578,30 +743,33 @@ canvas{
 #gameOver h1{
 
 
+    margin:0;
+
+
     color:#ff5500;
+
 
     font-size:
 
-    clamp(36px,6vw,72px);
+
+    clamp(40px,6vw,80px);
 
 
-    letter-spacing:
 
-    8px;
-
-
-    margin:0;
+    letter-spacing:8px;
 
 
     text-shadow:
 
 
-    0 0 10px #ff5500,
+    0 0 15px #ff5500,
 
-    0 0 30px #ff0000;
+    0 0 40px red;
 
 
 }
+
+
 
 
 
@@ -611,17 +779,16 @@ canvas{
 
     color:#ffaa00;
 
+
     font-size:
 
-    clamp(12px,2vw,20px);
 
-
-    margin:
-
-    15px;
+    clamp(12px,2vw,22px);
 
 
 }
+
+
 
 
 
@@ -632,6 +799,7 @@ canvas{
 
     color:#00f0ff;
 
+
     border:
 
     1px solid #00f0ff;
@@ -639,15 +807,17 @@ canvas{
 
     padding:
 
-    15px 30px;
+
+    14px 30px;
 
 
-    font-size:
 
-    clamp(14px,2vw,22px);
+    margin-top:15px;
 
 
 }
+
+
 
 
 
@@ -659,9 +829,12 @@ canvas{
     margin-top:25px;
 
 
+
     padding:
 
+
     10px 35px;
+
 
 
     background:
@@ -669,23 +842,23 @@ canvas{
     rgba(255,85,0,.1);
 
 
+
     border:
 
     1px solid #ff5500;
 
 
+
     color:#ff5500;
+
 
 
     letter-spacing:3px;
 
 
-    font-size:
-
-    clamp(12px,2vw,18px);
-
 
     box-shadow:
+
 
     0 0 20px #ff5500;
 
@@ -698,8 +871,10 @@ canvas{
 
 
 
+
+
 /* ==========================================================
-   LANDSCAPE WARNING
+   PORTRAIT BLOCK
 ========================================================== */
 
 
@@ -708,13 +883,12 @@ canvas{
 
     display:none;
 
+
 }
 
 
 
-
-
-@media(max-aspect-ratio:1/1){
+@media (orientation:portrait){
 
 
 #rotateWarning{
@@ -722,30 +896,45 @@ canvas{
 
     display:flex;
 
+
     position:absolute;
+
 
     inset:0;
 
+
+    z-index:999;
+
+
     background:#0b0f19;
+
 
     color:#00f0ff;
 
+
     justify-content:center;
+
 
     align-items:center;
 
+
     text-align:center;
 
-    z-index:999;
 
     font-size:22px;
 
 
+    line-height:2;
+
+
+    letter-spacing:3px;
+
+
 }
 
 
-
 }
+
 
 
 
@@ -754,7 +943,7 @@ canvas{
 
 
 /* ==========================================================
-   SMALL LANDSCAPE PHONES
+   SMALL LANDSCAPE DEVICES
 ========================================================== */
 
 
@@ -765,9 +954,12 @@ and (orientation:landscape){
 
 #bootOverlay{
 
-    bottom:15vh;
+
+    bottom:18vh;
+
 
     width:35vw;
+
 
 }
 
@@ -775,18 +967,24 @@ and (orientation:landscape){
 
 #play{
 
+
+    bottom:7vh;
+
+
     padding:
 
-    8px 25px;
+    8px 28px;
 
 
 }
 
 
 
-#hud{
+#copyright{
 
-    font-size:10px;
+
+    font-size:9px;
+
 
 }
 

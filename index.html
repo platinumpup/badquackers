@@ -5,9 +5,11 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
-<title>B.A.D.Quackers</title>
+
+<title>Sgt. Quackers: Burn Another Day</title>
 
 
 <link rel="stylesheet" href="style.css">
@@ -28,9 +30,9 @@
 
 
 
-<!-- ==================================
-     INTRO VIDEO
-================================== -->
+<!-- ==========================================
+     INTRO CINEMATIC
+========================================== -->
 
 
 <div id="introScreen">
@@ -59,9 +61,10 @@
 
 
 
-<!-- ==================================
-     TITLE / LOADING SCREEN
-================================== -->
+
+<!-- ==========================================
+     MAIN SPLASH
+========================================== -->
 
 
 <div id="titleScreen">
@@ -71,19 +74,21 @@
     <img
         id="splashGif"
         src="assets/splash.gif"
-        alt="Sgt Quackers"
+        alt="Sgt. Quackers"
     >
 
 
 
 
-    <div id="bootOverlay">
 
+    <!-- Tactical boot panel -->
+
+    <div id="bootOverlay">
 
 
         <div id="systemStatus">
 
-            INITIALIZING SYSTEM...
+            BOOTING SYSTEM...
 
         </div>
 
@@ -103,7 +108,6 @@
 
 
 
-
             <div id="loadingPercent">
 
                 0%
@@ -114,8 +118,9 @@
         </div>
 
 
-
     </div>
+
+
 
 
 
@@ -127,9 +132,12 @@
         disabled
     >
 
-        LAUNCH
+        INITIATE MISSION
+
 
     </button>
+
+
 
 
 
@@ -149,6 +157,8 @@
 
 
 
+
+
 </div>
 
 
@@ -158,9 +168,10 @@
 
 
 
-<!-- ==================================
-     ROTATE WARNING
-================================== -->
+
+<!-- ==========================================
+     LANDSCAPE WARNING
+========================================== -->
 
 
 <div id="rotateWarning">
@@ -182,9 +193,10 @@
 
 
 
-<!-- ==================================
-     HUD
-================================== -->
+
+<!-- ==========================================
+     GAME HUD
+========================================== -->
 
 
 <div id="hud">
@@ -194,33 +206,26 @@
     <div id="topLeftHud">
 
 
-        <div>
+        SCORE:
 
-            SCORE:
+        <span id="score">
 
-            <span id="score">
+            000000
 
-                000000
-
-            </span>
+        </span>
 
 
-        </div>
+        <br>
 
 
+        DIST:
 
-        <div>
+        <span id="distance">
 
-            DIST:
+            000000 M
 
-            <span id="distance">
+        </span>
 
-                00000 M
-
-            </span>
-
-
-        </div>
 
 
     </div>
@@ -254,37 +259,29 @@
     <div id="weaponHud">
 
 
-        <div>
+        WEAPON
 
-            WEAPON
-
-        </div>
+        <br>
 
 
-
-        <div id="weapon">
-
+        <span id="weapon">
 
             TACTICAL RIFLE
 
-
-        </div>
-
+        </span>
 
 
-        <div>
+        <br>
 
 
-            LVL
+        LVL
 
-            <span id="weaponLevel">
+        <span id="weaponLevel">
 
-                1
+            1
 
-            </span>
+        </span>
 
-
-        </div>
 
 
     </div>
@@ -298,13 +295,7 @@
     <div id="healthHud">
 
 
-        <div>
-
-            HULL
-
-        </div>
-
-
+        HULL
 
 
         <div id="healthBar">
@@ -318,12 +309,11 @@
 
 
 
-
-        <div id="healthText">
+        <span id="healthText">
 
             100%
 
-        </div>
+        </span>
 
 
 
@@ -335,13 +325,13 @@
 
 
 
-    <button id="muteButton">
 
+    <button id="muteButton">
 
         🔊
 
-
     </button>
+
 
 
 
@@ -356,9 +346,9 @@
 
 
 
-<!-- ==================================
+<!-- ==========================================
      GAME CANVAS
-================================== -->
+========================================== -->
 
 
 <canvas id="game"></canvas>
@@ -371,9 +361,9 @@
 
 
 
-<!-- ==================================
+<!-- ==========================================
      GAME OVER
-================================== -->
+========================================== -->
 
 
 <div id="gameOver">
@@ -392,9 +382,7 @@
 
     <h2 id="gameOverSubtitle">
 
-
-        YOU'VE BEEN BURNED
-
+        No one could help put out your fire
 
     </h2>
 
@@ -423,7 +411,7 @@
 
         <span id="finalDistance">
 
-            00000 M
+            000000 M
 
         </span>
 
@@ -438,6 +426,7 @@
             000000
 
         </span>
+
 
 
     </div>
@@ -468,7 +457,9 @@
 
 
 
+
 <script src="game.js"></script>
+
 
 
 
@@ -478,24 +469,23 @@
 if("serviceWorker" in navigator){
 
 
-    window.addEventListener(
+window.addEventListener(
 
-        "load",
+"load",
 
-        ()=>{
-
-
-            navigator.serviceWorker.register(
-
-                "service-worker.js"
-
-            );
+()=>{
 
 
-        }
+navigator.serviceWorker.register(
+
+"service-worker.js"
+
+);
 
 
-    );
+}
+
+);
 
 
 }
@@ -509,6 +499,5 @@ if("serviceWorker" in navigator){
 
 
 </body>
-
 
 </html>

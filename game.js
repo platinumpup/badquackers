@@ -1,48 +1,153 @@
 // ==========================================================
 // Sgt. Quackers: Burn Another Day
 // game.js
-// v0.2 Landscape Arcade Scaling
+// v0.3 Cyber Arcade Landscape Build
 // ==========================================================
 
+
 "use strict";
+
 
 
 // ==========================================================
 // DOM REFERENCES
 // ==========================================================
 
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+
+const canvas =
+document.getElementById("game");
 
 
-const introScreen = document.getElementById("introScreen");
-const introVideo = document.getElementById("introVideo");
-
-const titleScreen = document.getElementById("titleScreen");
-const playButton = document.getElementById("play");
-
-const systemStatus = document.getElementById("systemStatus");
-const loadingFill = document.getElementById("loadingFill");
-const loadingPercent = document.getElementById("loadingPercent");
+const ctx =
+canvas.getContext("2d");
 
 
-const gameOverScreen = document.getElementById("gameOver");
-const redeployButton = document.getElementById("redeploy");
+
+const introScreen =
+document.getElementById("introScreen");
 
 
-const scoreText = document.getElementById("score");
-const distanceText = document.getElementById("distance");
-
-const finalScore = document.getElementById("finalScore");
-const finalDistance = document.getElementById("finalDistance");
-const bestScore = document.getElementById("bestScore");
+const introVideo =
+document.getElementById("introVideo");
 
 
-const healthFill = document.getElementById("healthFill");
-const healthText = document.getElementById("healthText");
+const titleScreen =
+document.getElementById("titleScreen");
 
 
-const muteButton = document.getElementById("muteButton");
+const playButton =
+document.getElementById("play");
+
+
+
+const systemStatus =
+document.getElementById("systemStatus");
+
+
+const loadingFill =
+document.getElementById("loadingFill");
+
+
+const loadingPercent =
+document.getElementById("loadingPercent");
+
+
+
+const gameOverScreen =
+document.getElementById("gameOver");
+
+
+const redeployButton =
+document.getElementById("redeploy");
+
+
+
+const scoreText =
+document.getElementById("score");
+
+
+const distanceText =
+document.getElementById("distance");
+
+
+const finalScore =
+document.getElementById("finalScore");
+
+
+const finalDistance =
+document.getElementById("finalDistance");
+
+
+const bestScore =
+document.getElementById("bestScore");
+
+
+
+const healthFill =
+document.getElementById("healthFill");
+
+
+const healthText =
+document.getElementById("healthText");
+
+
+
+const muteButton =
+document.getElementById("muteButton");
+
+
+
+
+
+
+
+// ==========================================================
+// FORCE LANDSCAPE
+// ==========================================================
+
+
+async function forceLandscape(){
+
+
+    try{
+
+
+        if(
+        screen.orientation &&
+        screen.orientation.lock
+        ){
+
+            await screen.orientation.lock(
+                "landscape-primary"
+            );
+
+        }
+
+
+    }
+
+    catch(err){
+
+        console.log(
+            "Landscape lock unavailable",
+            err
+        );
+
+    }
+
+
+}
+
+
+
+window.addEventListener(
+"load",
+forceLandscape
+);
+
+
+
+
 
 
 
@@ -51,13 +156,19 @@ const muteButton = document.getElementById("muteButton");
 // VIRTUAL GAME RESOLUTION
 // ==========================================================
 
+
 const GAME_WIDTH = 1280;
+
 const GAME_HEIGHT = 720;
 
 
+
 let scale = 1;
+
 let offsetX = 0;
+
 let offsetY = 0;
+
 
 
 
@@ -66,6 +177,7 @@ function resize(){
 
     const dpr =
     window.devicePixelRatio || 1;
+
 
 
     canvas.width =
@@ -87,12 +199,19 @@ function resize(){
 
 
     ctx.setTransform(
+
         dpr,
+
         0,
+
         0,
+
         dpr,
+
         0,
+
         0
+
     );
 
 
@@ -109,14 +228,18 @@ function resize(){
 
 
     offsetX =
-    (window.innerWidth -
-    GAME_WIDTH * scale) / 2;
+    (
+        window.innerWidth -
+        GAME_WIDTH * scale
+    ) / 2;
 
 
 
     offsetY =
-    (window.innerHeight -
-    GAME_HEIGHT * scale) / 2;
+    (
+        window.innerHeight -
+        GAME_HEIGHT * scale
+    ) / 2;
 
 
 
@@ -137,23 +260,34 @@ resize();
 
 
 
+
+
+
 // ==========================================================
 // GAME STATES
 // ==========================================================
 
+
 const STATE = {
+
 
     BOOT:"BOOT",
 
+
     INTRO:"INTRO",
+
 
     TITLE:"TITLE",
 
+
     PLAYING:"PLAYING",
+
 
     GAME_OVER:"GAME_OVER"
 
+
 };
+
 
 
 let gameState =
@@ -163,29 +297,43 @@ STATE.BOOT;
 
 
 
+
+
+
+
 // ==========================================================
-// INTRO SYSTEM
+// INTRO BOOT SYSTEM
 // ==========================================================
+
 
 let loadingProgress = 0;
 
 
 const bootMessages = [
 
+
 "BOOTING SYSTEM...",
+
 
 "LOADING TACTICAL DATABASE...",
 
+
 "CALIBRATING JETPACK SYSTEM...",
+
 
 "WEAPON SYSTEMS ONLINE...",
 
+
 "INITIATING SURVIVAL MODE..."
+
 
 ];
 
 
+
 let messageIndex = 0;
+
+
 
 
 
@@ -193,7 +341,8 @@ function startBootSequence(){
 
 
     gameState =
-    STATE.INTRO;
+    STATE.TITLE;
+
 
 
     let interval =
@@ -203,27 +352,51 @@ function startBootSequence(){
         loadingProgress++;
 
 
-        loadingFill.style.width =
-        loadingProgress + "%";
+
+        if(loadingFill){
+
+            loadingFill.style.width =
+            loadingProgress + "%";
+
+        }
 
 
-        loadingPercent.innerText =
-        loadingProgress + "%";
+
+        if(loadingPercent){
+
+            loadingPercent.innerText =
+            loadingProgress + "%";
+
+        }
+
 
 
 
         if(
+
             loadingProgress % 20 === 0 &&
-            messageIndex < bootMessages.length
+
+            messageIndex <
+            bootMessages.length
+
         ){
 
-            systemStatus.innerText =
-            bootMessages[messageIndex];
+
+            if(systemStatus){
+
+                systemStatus.innerText =
+                bootMessages[messageIndex];
+
+            }
 
 
             messageIndex++;
 
+
         }
+
+
+
 
 
 
@@ -233,18 +406,30 @@ function startBootSequence(){
             clearInterval(interval);
 
 
-            systemStatus.innerText =
-            "SYSTEM READY";
+
+            if(systemStatus){
+
+                systemStatus.innerText =
+                "SYSTEM READY";
+
+            }
 
 
-            playButton.disabled =
-            false;
+
+            if(playButton){
+
+                playButton.disabled =
+                false;
+
+            }
 
 
         }
 
 
+
     },40);
+
 
 
 }
@@ -253,15 +438,27 @@ function startBootSequence(){
 
 
 
+
+
 function showTitleScreen(){
 
 
-    introScreen.style.display =
-    "none";
+    if(introScreen){
+
+        introScreen.style.display =
+        "none";
+
+    }
 
 
-    titleScreen.style.display =
-    "flex";
+
+    if(titleScreen){
+
+        titleScreen.style.display =
+        "flex";
+
+    }
+
 
 
     startBootSequence();
@@ -271,24 +468,47 @@ function showTitleScreen(){
 
 
 
+
+
+
+
+if(introVideo){
+
+
 introVideo.addEventListener(
+
 "ended",
-showTitleScreen
+
+()=>{
+
+    showTitleScreen();
+
+}
+
 );
+
+
+}
+
+
+
+
 
 
 
 setTimeout(()=>{
 
 
-if(gameState===STATE.BOOT){
+    if(gameState === STATE.BOOT){
 
-    showTitleScreen();
+        showTitleScreen();
 
-}
+    }
 
 
 },10000);
+
+
 
 
 
@@ -303,6 +523,7 @@ if(gameState===STATE.BOOT){
 
 let savedData =
 
+
 JSON.parse(
 
 localStorage.getItem(
@@ -313,20 +534,28 @@ localStorage.getItem(
 
 ||
 
+
 {
+
 
 highScore:0,
 
+
 bestDistance:0,
 
+
 runs:0
+
 
 };
 
 
 
 
+
+
 function saveData(){
+
 
 localStorage.setItem(
 
@@ -336,7 +565,12 @@ JSON.stringify(savedData)
 
 );
 
+
 }
+
+
+
+
 
 
 
@@ -351,6 +585,8 @@ const sprites = {};
 
 
 
+
+
 function loadSprite(name,path){
 
 
@@ -358,8 +594,10 @@ function loadSprite(name,path){
     new Image();
 
 
+
     img.src =
     path;
+
 
 
     sprites[name] =
@@ -370,22 +608,39 @@ function loadSprite(name,path){
 
 
 
+
+
 loadSprite(
+
 "hover",
+
 "assets/characters/quackers/hover_01.png"
+
 );
 
 
+
 loadSprite(
+
 "up",
+
 "assets/characters/quackers/flap_up.png"
+
 );
+
 
 
 loadSprite(
+
 "down",
+
 "assets/characters/quackers/flap_down.png"
+
 );
+
+
+
+
 
 
 
@@ -393,8 +648,11 @@ const corridor =
 new Image();
 
 
+
 corridor.src =
 "assets/corridor.png";
+
+
 
 
 
@@ -416,6 +674,10 @@ const corridorSpeed = 220;
 
 
 
+
+
+
+
 // ==========================================================
 // PLAYER
 // ==========================================================
@@ -424,28 +686,66 @@ const corridorSpeed = 220;
 const player = {
 
 
-x:GAME_WIDTH * 0.22,
+    x:
+    GAME_WIDTH * 0.22,
 
 
-y:GAME_HEIGHT / 2,
+    y:
+    GAME_HEIGHT / 2,
 
 
-velocity:0,
+
+    velocity:0,
 
 
-gravity:1200,
+    gravity:1200,
 
 
-flap:-420,
+    flap:-420,
 
 
-rotation:0,
+    rotation:0,
 
 
-sprite:"hover"
+    sprite:"hover"
 
 
 };
+
+
+
+
+
+
+
+
+
+// ==========================================================
+// GAME DATA
+// ==========================================================
+
+
+let score = 0;
+
+
+let distance = 0;
+
+
+let health = 100;
+
+
+let muted = false;
+
+
+
+let last = 0;
+
+
+
+let particles = [];
+
+
+let shake = 0;
 // ==========================================================
 // INPUT
 // ==========================================================
@@ -455,6 +755,7 @@ function flap(){
 
 
     if(gameState !== STATE.PLAYING)
+
         return;
 
 
@@ -468,6 +769,7 @@ function flap(){
     "up";
 
 
+
     boostParticles();
 
 
@@ -476,14 +778,17 @@ function flap(){
 
 
 
+
+
+
 window.addEventListener(
 
 "keydown",
 
-e=>{
+(e)=>{
 
 
-    if(e.code==="Space"){
+    if(e.code === "Space"){
 
         flap();
 
@@ -491,7 +796,7 @@ e=>{
 
 
 
-    if(e.code==="KeyM"){
+    if(e.code === "KeyM"){
 
         toggleMute();
 
@@ -508,9 +813,14 @@ canvas.addEventListener(
 
 "pointerdown",
 
-flap
+()=>{
+
+    flap();
+
+}
 
 );
+
 
 
 
@@ -527,8 +837,13 @@ flap
 playButton.onclick = ()=>{
 
 
-    titleScreen.style.display =
-    "none";
+    if(titleScreen){
+
+        titleScreen.style.display =
+        "none";
+
+    }
+
 
 
     gameState =
@@ -555,12 +870,12 @@ playButton.onclick = ()=>{
 
 
 
-
 redeployButton.onclick = ()=>{
 
 
     gameOverScreen.style.display =
     "none";
+
 
 
     resetGame();
@@ -595,7 +910,9 @@ function resetGame(){
 
     score = 0;
 
+
     distance = 0;
+
 
     health = 100;
 
@@ -608,7 +925,9 @@ function resetGame(){
 
     player.velocity = 0;
 
+
     player.rotation = 0;
+
 
 
     corridorX = 0;
@@ -616,6 +935,7 @@ function resetGame(){
 
 
 }
+
 
 
 
@@ -636,25 +956,37 @@ function toggleMute(){
     !muted;
 
 
-    muteButton.innerText =
 
-    muted
+    if(muteButton){
 
-    ?
+        muteButton.innerText =
 
-    "🔇"
+        muted
 
-    :
+        ?
 
-    "🔊";
+        "🔇"
+
+        :
+
+        "🔊";
+
+
+    }
 
 
 }
 
 
 
-muteButton.onclick =
-toggleMute;
+if(muteButton){
+
+    muteButton.onclick =
+    toggleMute;
+
+}
+
+
 
 
 
@@ -670,6 +1002,7 @@ toggleMute;
 function loop(time){
 
 
+
     if(gameState !== STATE.PLAYING)
 
         return;
@@ -677,8 +1010,10 @@ function loop(time){
 
 
 
+
     let dt =
-    (time-last)/1000;
+
+    (time-last) / 1000;
 
 
 
@@ -688,6 +1023,7 @@ function loop(time){
 
 
     update(dt);
+
 
 
     draw();
@@ -717,12 +1053,15 @@ function update(dt){
 
 
     corridorX -=
+
     corridorSpeed * dt;
 
 
 
     if(
+
     corridorX <= -GAME_WIDTH
+
     ){
 
         corridorX = 0;
@@ -734,12 +1073,15 @@ function update(dt){
 
 
 
+
     distance +=
+
     corridorSpeed * dt / 10;
 
 
 
     score =
+
     Math.floor(distance * 5);
 
 
@@ -750,11 +1092,13 @@ function update(dt){
 
 
     player.velocity +=
+
     player.gravity * dt;
 
 
 
     player.y +=
+
     player.velocity * dt;
 
 
@@ -785,17 +1129,27 @@ function update(dt){
 
 
 
+
     if(player.velocity < 0){
 
-        player.sprite = "up";
+
+        player.sprite =
+
+        "up";
+
 
     }
 
     else{
 
-        player.sprite = "down";
+
+        player.sprite =
+
+        "down";
+
 
     }
+
 
 
 
@@ -811,7 +1165,9 @@ function update(dt){
 
     ){
 
+
         triggerGameOver();
+
 
     }
 
@@ -833,7 +1189,11 @@ function update(dt){
 
     if(shake > 0){
 
-        shake -= dt * 40;
+
+        shake -=
+
+        dt * 40;
+
 
     }
 
@@ -858,40 +1218,59 @@ function updateHUD(){
 
 
 
-    scoreText.innerText =
+    if(scoreText){
 
-    formatNumber(score);
+        scoreText.innerText =
 
+        formatNumber(score);
 
-
-
-    distanceText.innerText =
-
-    formatNumber(
-
-        Math.floor(distance)
-
-    )
-
-    +
-
-    " M";
+    }
 
 
 
 
 
-    healthFill.style.width =
+    if(distanceText){
 
-    health + "%";
+        distanceText.innerText =
+
+        formatNumber(
+
+            Math.floor(distance)
+
+        )
+
+        +
+
+        " M";
+
+    }
 
 
 
 
 
-    healthText.innerText =
 
-    health + "%";
+    if(healthFill){
+
+        healthFill.style.width =
+
+        health + "%";
+
+    }
+
+
+
+
+
+    if(healthText){
+
+        healthText.innerText =
+
+        health + "%";
+
+    }
+
 
 
 }
@@ -902,7 +1281,9 @@ function updateHUD(){
 
 
 
+
 function formatNumber(num){
+
 
 
     return String(
@@ -940,7 +1321,9 @@ function triggerGameOver(){
 
 
     if(
+
     gameState === STATE.GAME_OVER
+
     )
 
     return;
@@ -948,8 +1331,12 @@ function triggerGameOver(){
 
 
 
+
     gameState =
+
     STATE.GAME_OVER;
+
+
 
 
 
@@ -961,20 +1348,36 @@ function triggerGameOver(){
 
 
 
+
+
     if(score > savedData.highScore){
 
-        savedData.highScore = score;
+
+        savedData.highScore =
+
+        score;
+
 
     }
+
+
+
 
 
 
 
     if(distance > savedData.bestDistance){
 
-        savedData.bestDistance = distance;
+
+        savedData.bestDistance =
+
+        distance;
+
 
     }
+
+
+
 
 
 
@@ -987,37 +1390,57 @@ function triggerGameOver(){
 
 
 
-    finalScore.innerText =
 
-    formatNumber(score);
+    if(finalScore){
 
+        finalScore.innerText =
 
+        formatNumber(score);
 
-
-
-    finalDistance.innerText =
-
-    formatNumber(
-
-        Math.floor(distance)
-
-    )
-
-    +
-
-    " M";
+    }
 
 
 
 
 
-    bestScore.innerText =
 
-    formatNumber(
 
-        savedData.highScore
+    if(finalDistance){
 
-    );
+        finalDistance.innerText =
+
+        formatNumber(
+
+            Math.floor(distance)
+
+        )
+
+        +
+
+        " M";
+
+
+    }
+
+
+
+
+
+
+
+    if(bestScore){
+
+        bestScore.innerText =
+
+        formatNumber(
+
+            savedData.highScore
+
+        );
+
+
+    }
+
 
 
 
@@ -1025,6 +1448,7 @@ function triggerGameOver(){
 
 
     gameOverScreen.style.display =
+
     "flex";
 
 
@@ -1047,6 +1471,7 @@ function triggerGameOver(){
 function boostParticles(){
 
 
+
     for(let i=0;i<15;i++){
 
 
@@ -1054,14 +1479,16 @@ function boostParticles(){
         particles.push({
 
 
+
             x:
 
-            player.x - 40,
+            player.x - 45,
+
 
 
             y:
 
-            player.y + 10,
+            player.y + 15,
 
 
 
@@ -1098,7 +1525,9 @@ function boostParticles(){
     shake = 8;
 
 
+
 }
+
 
 
 
@@ -1113,9 +1542,9 @@ function updateParticles(dt){
 
     for(
 
-    let i=particles.length-1;
+    let i = particles.length - 1;
 
-    i>=0;
+    i >= 0;
 
     i--
 
@@ -1123,8 +1552,11 @@ function updateParticles(dt){
 
 
 
-        let p =
+        const p =
+
         particles[i];
+
+
 
 
 
@@ -1142,19 +1574,31 @@ function updateParticles(dt){
 
         p.life -=
 
-        dt*2;
+        dt * 2;
+
+
 
 
 
 
         if(p.life <= 0){
 
-            particles.splice(i,1);
+
+            particles.splice(
+
+            i,
+
+            1
+
+            );
+
 
         }
 
 
+
     }
+
 
 
 }
@@ -1176,21 +1620,31 @@ function drawParticles(){
 
 
         ctx.globalAlpha =
+
         p.life;
+
+
 
 
 
         ctx.fillStyle =
 
+
         p.life > .5
+
 
         ?
 
+
         "#00f0ff"
+
 
         :
 
+
         "#ff5500";
+
+
 
 
 
@@ -1210,7 +1664,7 @@ function drawParticles(){
 
             0,
 
-            Math.PI*2
+            Math.PI * 2
 
         );
 
@@ -1221,6 +1675,8 @@ function drawParticles(){
 
 
     }
+
+
 
 
 
@@ -1246,7 +1702,10 @@ function drawParticles(){
 function draw(){
 
 
+
     ctx.save();
+
+
 
 
 
@@ -1257,6 +1716,8 @@ function draw(){
         offsetY
 
     );
+
+
 
 
 
@@ -1273,7 +1734,10 @@ function draw(){
 
 
 
+
+
     if(shake > 0){
+
 
 
         ctx.translate(
@@ -1296,10 +1760,15 @@ function draw(){
     drawCorridor();
 
 
+
     drawParticles();
 
 
+
     drawPlayer();
+
+
+
 
 
 
@@ -1328,6 +1797,7 @@ function drawCorridor(){
 
 
     ctx.fillStyle =
+
     "#0b0f19";
 
 
@@ -1350,9 +1820,11 @@ function drawCorridor(){
 
 
 
+
     if(!corridor.complete)
 
         return;
+
 
 
 
@@ -1373,6 +1845,8 @@ function drawCorridor(){
         GAME_HEIGHT
 
     );
+
+
 
 
 
@@ -1405,7 +1879,7 @@ function drawCorridor(){
 
 
 // ==========================================================
-// PLAYER
+// PLAYER DRAW
 // ==========================================================
 
 
@@ -1414,13 +1888,17 @@ function drawPlayer(){
 
 
     const img =
+
     sprites[player.sprite];
 
 
 
-    if(!img.complete)
+
+
+    if(!img || !img.complete)
 
         return;
+
 
 
 
@@ -1431,6 +1909,10 @@ function drawPlayer(){
 
 
 
+
+
+
+
     ctx.translate(
 
         player.x,
@@ -1438,6 +1920,8 @@ function drawPlayer(){
         player.y
 
     );
+
+
 
 
 
@@ -1454,7 +1938,15 @@ function drawPlayer(){
 
 
 
-    const size = 150;
+
+    // smaller arcade-scale duck
+
+    const size = 125;
+
+
+
+
+
 
 
 
@@ -1477,6 +1969,7 @@ function drawPlayer(){
 
 
 
+
     ctx.restore();
 
 
@@ -1490,8 +1983,9 @@ function drawPlayer(){
 
 
 
+
 // ==========================================================
-// BOOT
+// START
 // ==========================================================
 
 

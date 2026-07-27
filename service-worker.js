@@ -1,7 +1,7 @@
 // ==========================================================
 // Sgt. Quackers: Burn Another Day
 // service-worker.js
-// PWA Offline Cache
+// v0.3 Cyber Cache System
 // ==========================================================
 
 
@@ -10,7 +10,7 @@
 
 
 const CACHE_NAME =
-"sgt-quackers-burn-another-day-v1";
+"sgt-quackers-v3";
 
 
 
@@ -19,40 +19,60 @@ const CACHE_NAME =
 const ASSETS = [
 
 
-    "./",
-
-    "./index.html",
-
-    "./style.css",
-
-    "./game.js",
-
-    "./manifest.json",
+"./",
 
 
+"./index.html",
 
-    "./assets/splash.mp4",
 
-    "./assets/splash.gif",
+"./style.css",
 
-    "./assets/corridor.png",
+
+"./game.js",
+
+
+"./manifest.json",
 
 
 
-    "./assets/characters/quackers/hover_01.png",
 
-    "./assets/characters/quackers/flap_up.png",
+// splash assets
 
-    "./assets/characters/quackers/flap_down.png",
+"./assets/splash.gif",
+
+"./assets/splash.mp4",
 
 
 
-    "./assets/icons/icon-192.png",
 
-    "./assets/icons/icon-512.png"
+// corridor
+
+"./assets/corridor.png",
+
+
+
+
+// character sprites
+
+"./assets/characters/quackers/hover_01.png",
+
+"./assets/characters/quackers/flap_up.png",
+
+"./assets/characters/quackers/flap_down.png",
+
+
+
+
+// icons
+
+"./assets/icons/icon-192.png",
+
+"./assets/icons/icon-512.png"
 
 
 ];
+
+
 
 
 
@@ -75,26 +95,36 @@ event=>{
     event.waitUntil(
 
 
-        caches.open(CACHE_NAME)
+        caches.open(
+
+            CACHE_NAME
+
+        )
 
         .then(cache=>{
 
 
-            return cache.addAll(ASSETS);
+            return cache.addAll(
+
+                ASSETS
+
+            );
 
 
         })
 
 
+
     );
+
 
 
     self.skipWaiting();
 
 
-}
 
-);
+});
+
 
 
 
@@ -130,10 +160,18 @@ event=>{
 
 
                     if(
+
                     key !== CACHE_NAME
+
                     ){
 
-                        return caches.delete(key);
+
+                        return caches.delete(
+
+                            key
+
+                        );
+
 
                     }
 
@@ -150,12 +188,13 @@ event=>{
     );
 
 
+
     self.clients.claim();
 
 
-}
 
-);
+});
+
 
 
 
@@ -176,56 +215,53 @@ self.addEventListener(
 event=>{
 
 
+
     event.respondWith(
 
 
+
         caches.match(
+
             event.request
+
         )
 
-        .then(response=>{
+        .then(cached=>{
 
 
-            return response ||
-
-            fetch(event.request)
-
-            .then(networkResponse=>{
+            if(cached){
 
 
-                return caches.open(
-
-                    CACHE_NAME
-
-                )
-
-                .then(cache=>{
+                return cached;
 
 
-                    cache.put(
-
-                        event.request,
-
-                        networkResponse.clone()
-
-                    );
+            }
 
 
-                    return networkResponse;
 
 
-                });
+            return fetch(
+
+                event.request
+
+            )
+
+            .then(response=>{
+
+
+                return response;
 
 
             });
 
 
+
         })
+
 
 
     );
 
 
-}
 
-);
+});
