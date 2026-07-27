@@ -110,13 +110,34 @@ document.getElementById("muteButton");
 
 function resize(){
 
+    const dpr =
+    window.devicePixelRatio || 1;
+
+
     canvas.width =
-    window.innerWidth;
+    window.innerWidth * dpr;
 
 
     canvas.height =
-    window.innerHeight;
+    window.innerHeight * dpr;
 
+
+    canvas.style.width =
+    window.innerWidth + "px";
+
+
+    canvas.style.height =
+    window.innerHeight + "px";
+
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
 
 }
 
@@ -462,7 +483,7 @@ const corridorSpeed = 220;
 const player = {
 
 
-x:250,
+x:window.innerWidth * 0.25,
 
 
 y:400,
@@ -1396,19 +1417,26 @@ function drawPlayer(){
 
 
 
-    ctx.drawImage(
+    const size =
+Math.min(
+canvas.width,
+canvas.height
+) * 0.22;
 
-        img,
 
-        -128,
+ctx.drawImage(
 
-        -128,
+    img,
 
-        256,
+    -size/2,
 
-        256
+    -size/2,
 
-    );
+    size,
+
+    size
+
+);
 
 
 
