@@ -217,13 +217,13 @@ function resize(){
 
 
     scale =
-    Math.min(
+Math.min(
 
-        window.innerWidth / GAME_WIDTH,
+    window.innerWidth / GAME_WIDTH,
 
-        window.innerHeight / GAME_HEIGHT
+    window.innerHeight / GAME_HEIGHT
 
-    );
+) * 0.98;
 
 
 
