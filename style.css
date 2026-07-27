@@ -1,3 +1,10 @@
+/* ==========================================================
+   Sgt. Quackers: Burn Another Day
+   style.css
+   Landscape Arcade UI
+========================================================== */
+
+
 *{
 
     box-sizing:border-box;
@@ -9,17 +16,29 @@
 html,
 body{
 
+
     margin:0;
 
     padding:0;
+
+    width:100%;
+
+    height:100%;
 
     overflow:hidden;
 
     background:#0b0f19;
 
+    touch-action:none;
+
     font-family:
-    "Courier New",
-    monospace;
+
+    "Orbitron",
+
+    "Segoe UI",
+
+    sans-serif;
+
 
 }
 
@@ -28,19 +47,17 @@ body{
 
 canvas{
 
+
     position:absolute;
 
-    top:0;
-
-    left:0;
-
-    display:block;
+    inset:0;
 
     width:100%;
 
     height:100%;
 
-    touch-action:none;
+    display:block;
+
 
 }
 
@@ -48,12 +65,15 @@ canvas{
 
 
 
-/* ==================================
+
+
+/* ==========================================================
    INTRO VIDEO
-================================== */
+========================================================== */
 
 
 #introScreen{
+
 
     position:absolute;
 
@@ -70,6 +90,7 @@ canvas{
 
 #introVideo{
 
+
     width:100%;
 
     height:100%;
@@ -83,39 +104,45 @@ canvas{
 
 
 
-/* ==================================
+
+
+/* ==========================================================
    TITLE SCREEN
-================================== */
+========================================================== */
 
 
 #titleScreen{
+
 
     position:absolute;
 
     inset:0;
 
-    display:none;
-
-    justify-content:center;
-
-    align-items:center;
+    display:flex;
 
     flex-direction:column;
 
-    background:#050812;
+    justify-content:flex-end;
+
+    align-items:center;
+
+    padding-bottom:4vh;
+
+    background:#0b0f19;
+
+    z-index:50;
 
     overflow:hidden;
 
-    z-index:90;
 
 }
-
 
 
 
 
 #splashGif{
 
+
     position:absolute;
 
     inset:0;
@@ -126,67 +153,43 @@ canvas{
 
     object-fit:cover;
 
-    z-index:-1;
-
 
 }
 
 
 
-
-
-
-#titleScreen::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-
-    repeating-linear-gradient(
-
-        0deg,
-
-        rgba(0,240,255,.05),
-
-        rgba(0,240,255,.05) 1px,
-
-        transparent 1px,
-
-        transparent 4px
-
-    );
-
-    pointer-events:none;
-
-
-}
-
-
-
-
-
-
-
-/* ==================================
-   BOOT SYSTEM
-================================== */
 
 
 #bootOverlay{
 
+
     position:absolute;
 
-    bottom:180px;
+    bottom:18vh;
 
-    width:420px;
+    width:min(40vw,420px);
 
     text-align:center;
 
+    z-index:2;
+
+
+}
+
+
+
+
+
+#systemStatus{
+
+
     color:#00f0ff;
+
+    font-size:clamp(10px,1.4vw,18px);
+
+    letter-spacing:3px;
+
+    margin-bottom:10px;
 
     text-shadow:
 
@@ -199,50 +202,23 @@ canvas{
 
 
 
-#systemStatus{
-
-    font-size:22px;
-
-    letter-spacing:3px;
-
-    margin-bottom:18px;
-
-
-}
-
-
-
-
-
-
-#loadingContainer{
-
-    width:100%;
-
-
-}
-
-
-
-
 
 #loadingBar{
 
-    height:22px;
+
+    width:100%;
+
+    height:8px;
+
+    background:#111827;
 
     border:
 
-    2px solid #00f0ff;
-
-    background:
-
-    rgba(0,0,0,.6);
-
-    padding:3px;
+    1px solid #00f0ff;
 
     box-shadow:
 
-    0 0 15px #00f0ff;
+    0 0 12px #00f0ff;
 
 
 }
@@ -252,19 +228,16 @@ canvas{
 
 #loadingFill{
 
-    width:0%;
 
     height:100%;
+
+    width:0%;
 
     background:#00f0ff;
 
     box-shadow:
 
     0 0 15px #00f0ff;
-
-    transition:
-
-    width .2s linear;
 
 
 }
@@ -274,9 +247,12 @@ canvas{
 
 #loadingPercent{
 
-    margin-top:10px;
 
-    font-size:18px;
+    margin-top:5px;
+
+    color:#ffaa00;
+
+    font-size:12px;
 
 
 }
@@ -285,77 +261,63 @@ canvas{
 
 
 
-
-
-/* ==================================
-   PLAY BUTTON
-================================== */
 
 
 #play{
 
-    position:absolute;
 
-    bottom:90px;
+    position:relative;
 
-    padding:18px 55px;
+    z-index:3;
 
-    font-size:24px;
+    padding:
 
-    letter-spacing:4px;
+    10px 35px;
 
-    color:#00f0ff;
+
+    margin-bottom:2vh;
+
 
     background:
 
-    rgba(0,0,0,.35);
+    rgba(0,240,255,.08);
+
 
     border:
 
-    2px solid #00f0ff;
+    1px solid #00f0ff;
 
-    border-radius:0;
 
-    cursor:pointer;
+    color:#00f0ff;
 
-    text-shadow:
 
-    0 0 8px #00f0ff;
+    font-size:
+
+    clamp(12px,1.8vw,20px);
+
+
+    letter-spacing:3px;
 
 
     box-shadow:
 
-    0 0 20px rgba(0,240,255,.8);
+    0 0 20px #00f0ff;
 
 
-    transition:.3s;
-
-
-}
-
-
-
-
-#play:hover:not(:disabled){
-
-    background:
-
-    rgba(0,240,255,.15);
-
-    transform:scale(1.05);
+    cursor:pointer;
 
 
 }
+
+
 
 
 
 
 #play:disabled{
 
-    opacity:.4;
 
-    cursor:not-allowed;
-
+    opacity:.5;
 
 }
 
@@ -363,32 +325,25 @@ canvas{
 
 
 
-
-
-/* ==================================
-   COPYRIGHT
-================================== */
 
 
 #copyright{
 
-    position:absolute;
 
-    bottom:20px;
+    position:relative;
+
+    z-index:3;
+
+    color:#94a3b8;
+
+    font-size:
+
+    clamp(8px,1vw,12px);
+
 
     text-align:center;
 
-    color:#00f0ff;
-
-    font-size:14px;
-
     letter-spacing:2px;
-
-    opacity:.8;
-
-    text-shadow:
-
-    0 0 8px #00f0ff;
 
 
 }
@@ -399,71 +354,40 @@ canvas{
 
 
 
-
-
-/* ==================================
+/* ==========================================================
    HUD
-================================== */
+========================================================== */
 
 
 #hud{
+
 
     position:absolute;
 
     inset:0;
 
-    pointer-events:none;
+    z-index:20;
 
-    z-index:5;
+    pointer-events:none;
 
     color:#00f0ff;
 
-    font-size:22px;
+    font-size:
 
-
-}
-
-
-
-
-
-#topLeftHud,
-#sectorHud,
-#weaponHud,
-#healthHud{
-
-
-    background:
-
-    rgba(11,15,25,.85);
-
-
-    border:
-
-    2px solid #00f0ff;
-
-
-    padding:12px 18px;
-
-
-    text-shadow:
-
-    0 0 8px #00f0ff;
-
+    clamp(10px,1.3vw,16px);
 
 }
-
-
 
 
 
 #topLeftHud{
 
+
     position:absolute;
 
-    top:20px;
+    top:12px;
 
-    left:20px;
+    left:15px;
 
 
 }
@@ -472,9 +396,10 @@ canvas{
 
 #sectorHud{
 
+
     position:absolute;
 
-    top:20px;
+    top:12px;
 
     left:50%;
 
@@ -488,11 +413,12 @@ canvas{
 
 #weaponHud{
 
+
     position:absolute;
 
-    right:20px;
+    top:12px;
 
-    bottom:20px;
+    right:15px;
 
     text-align:right;
 
@@ -501,27 +427,14 @@ canvas{
 
 
 
-#weapon{
-
-    color:#ffaa00;
-
-    font-size:26px;
-
-
-}
-
-
-
-
 #healthHud{
+
 
     position:absolute;
 
-    left:20px;
+    bottom:15px;
 
-    bottom:20px;
-
-    width:260px;
+    left:15px;
 
 
 }
@@ -530,20 +443,27 @@ canvas{
 
 #healthBar{
 
-    height:22px;
+
+    width:
+
+    clamp(120px,18vw,220px);
+
+
+    height:10px;
 
     border:
 
-    2px solid #00f0ff;
-
-    margin-top:8px;
+    1px solid #00f0ff;
 
 
 }
 
 
 
+
+
 #healthFill{
+
 
     height:100%;
 
@@ -557,19 +477,34 @@ canvas{
 
 
 
+
 #muteButton{
+
 
     position:absolute;
 
-    top:20px;
+    bottom:15px;
 
-    right:20px;
+    right:15px;
+
 
     pointer-events:auto;
 
-    padding:10px;
 
-    font-size:20px;
+    background:
+
+    rgba(11,15,25,.7);
+
+
+    border:
+
+    1px solid #00f0ff;
+
+
+    color:#00f0ff;
+
+
+    padding:8px 12px;
 
 
 }
@@ -581,13 +516,13 @@ canvas{
 
 
 
-
-/* ==================================
+/* ==========================================================
    GAME OVER
-================================== */
+========================================================== */
 
 
 #gameOver{
+
 
     position:absolute;
 
@@ -595,190 +530,64 @@ canvas{
 
     display:none;
 
+    flex-direction:column;
+
     justify-content:center;
 
     align-items:center;
 
-    flex-direction:column;
 
     background:
 
     radial-gradient(
-        circle at center,
-        rgba(255,85,0,.18),
-        rgba(5,8,18,.97)
+
+    circle,
+
+    rgba(255,85,0,.25),
+
+    rgba(11,15,25,.97)
+
     );
 
 
-    z-index:50;
-
-    overflow:hidden;
+    z-index:80;
 
     text-align:center;
 
-    color:#ff5500;
-
 
 }
 
 
 
-
-
-/* cyber scan overlay */
-
-#gameOver::before{
-
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-
-    background:
-
-    repeating-linear-gradient(
-
-        0deg,
-
-        rgba(255,85,0,.08),
-
-        rgba(255,85,0,.08) 1px,
-
-        transparent 2px,
-
-        transparent 5px
-
-    );
-
-
-    animation:
-
-    gameOverScan 4s linear infinite;
-
-
-    pointer-events:none;
-
-
-}
-
-
-
-
-@keyframes gameOverScan{
-
-
-    from{
-
-        transform:translateY(0);
-
-    }
-
-
-    to{
-
-        transform:translateY(25px);
-
-    }
-
-
-}
-
-
-
-
-
-
-
-/* flame glow title */
 
 
 #gameOver h1{
 
 
-    position:relative;
+    color:#ff5500;
+
+    font-size:
+
+    clamp(36px,6vw,72px);
+
+
+    letter-spacing:
+
+    8px;
 
 
     margin:0;
 
 
-    font-family:
-
-    "Orbitron",
-
-    "Courier New",
-
-    monospace;
-
-
-    font-size:72px;
-
-
-    font-weight:900;
-
-
-    letter-spacing:12px;
-
-
-    color:#ff5500;
-
-
-    text-transform:uppercase;
-
-
     text-shadow:
 
 
-    0 0 8px #ff5500,
+    0 0 10px #ff5500,
 
-    0 0 20px #ff3300,
-
-    0 0 45px #ff0000;
-
-
-
-    animation:
-
-    flamePulse 2s infinite alternate;
+    0 0 30px #ff0000;
 
 
 }
-
-
-
-
-
-@keyframes flamePulse{
-
-
-    from{
-
-
-        filter:
-
-        brightness(1);
-
-
-    }
-
-
-    to{
-
-
-        filter:
-
-        brightness(1.45);
-
-
-    }
-
-
-}
-
-
-
 
 
 
@@ -786,171 +595,85 @@ canvas{
 #gameOverSubtitle{
 
 
-    position:relative;
-
-
-    margin-top:20px;
-
-
-    margin-bottom:45px;
-
-
-    font-family:
-
-    "Courier New",
-
-    monospace;
-
-
-    font-size:20px;
-
-
-    letter-spacing:3px;
-
-
     color:#ffaa00;
 
+    font-size:
 
-    text-shadow:
+    clamp(12px,2vw,20px);
 
 
-    0 0 10px #ffaa00;
+    margin:
+
+    15px;
 
 
 }
 
 
 
-
-
-
-
-/* results panel */
 
 
 #results{
 
 
-    position:relative;
+    color:#00f0ff;
+
+    border:
+
+    1px solid #00f0ff;
 
 
     padding:
 
-    25px 50px;
+    15px 30px;
 
 
-    background:
+    font-size:
 
-    rgba(11,15,25,.8);
-
-
-
-    border:
-
-    2px solid #00f0ff;
-
-
-
-    color:#00f0ff;
-
-
-    font-family:
-
-    "Courier New",
-
-    monospace;
-
-
-    font-size:24px;
-
-
-    line-height:2;
-
-
-
-    box-shadow:
-
-
-    0 0 20px rgba(0,240,255,.5);
+    clamp(14px,2vw,22px);
 
 
 }
 
 
 
-
-
-
-
-/* burn another day button */
 
 
 #redeploy{
 
 
-    position:relative;
-
-
-    margin-top:45px;
+    margin-top:25px;
 
 
     padding:
 
-    18px 55px;
-
+    10px 35px;
 
 
     background:
 
-    rgba(255,85,0,.08);
-
+    rgba(255,85,0,.1);
 
 
     border:
 
-    2px solid #ff5500;
-
+    1px solid #ff5500;
 
 
     color:#ff5500;
 
 
-
-    font-family:
-
-    "Orbitron",
-
-    "Courier New",
-
-    monospace;
+    letter-spacing:3px;
 
 
+    font-size:
 
-    font-size:22px;
-
-
-    letter-spacing:4px;
-
-
-    cursor:pointer;
-
-
-
-    text-shadow:
-
-
-    0 0 10px #ff5500;
-
+    clamp(12px,2vw,18px);
 
 
     box-shadow:
 
-
     0 0 20px #ff5500;
-
-
-
-    transition:.3s;
 
 
 }
@@ -958,25 +681,101 @@ canvas{
 
 
 
-#redeploy:hover{
-
-
-    background:
-
-    rgba(255,85,0,.25);
 
 
 
-    transform:
-
-    scale(1.05);
-
-
-
-    box-shadow:
+/* ==========================================================
+   LANDSCAPE WARNING
+========================================================== */
 
 
-    0 0 40px #ff5500;
+#rotateWarning{
+
+
+    display:none;
+
+}
+
+
+
+
+
+@media(max-aspect-ratio:1/1){
+
+
+#rotateWarning{
+
+
+    display:flex;
+
+    position:absolute;
+
+    inset:0;
+
+    background:#0b0f19;
+
+    color:#00f0ff;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    z-index:999;
+
+    font-size:22px;
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================================
+   SMALL LANDSCAPE PHONES
+========================================================== */
+
+
+@media(max-height:600px)
+and (orientation:landscape){
+
+
+
+#bootOverlay{
+
+    bottom:15vh;
+
+    width:35vw;
+
+}
+
+
+
+#play{
+
+    padding:
+
+    8px 25px;
+
+
+}
+
+
+
+#hud{
+
+    font-size:10px;
+
+}
+
 
 
 }

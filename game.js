@@ -1,114 +1,68 @@
 // ==========================================================
 // Sgt. Quackers: Burn Another Day
 // game.js
-// v0.1 Cyber Boot Integration
+// v0.2 Landscape Arcade Scaling
 // ==========================================================
 
-
 "use strict";
-
 
 
 // ==========================================================
 // DOM REFERENCES
 // ==========================================================
 
-
-const canvas =
-document.getElementById("game");
-
-
-const ctx =
-canvas.getContext("2d");
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
 
 
+const introScreen = document.getElementById("introScreen");
+const introVideo = document.getElementById("introVideo");
 
-const introScreen =
-document.getElementById("introScreen");
+const titleScreen = document.getElementById("titleScreen");
+const playButton = document.getElementById("play");
 
-
-const introVideo =
-document.getElementById("introVideo");
-
-
-const titleScreen =
-document.getElementById("titleScreen");
+const systemStatus = document.getElementById("systemStatus");
+const loadingFill = document.getElementById("loadingFill");
+const loadingPercent = document.getElementById("loadingPercent");
 
 
-
-const playButton =
-document.getElementById("play");
-
+const gameOverScreen = document.getElementById("gameOver");
+const redeployButton = document.getElementById("redeploy");
 
 
-const systemStatus =
-document.getElementById("systemStatus");
+const scoreText = document.getElementById("score");
+const distanceText = document.getElementById("distance");
+
+const finalScore = document.getElementById("finalScore");
+const finalDistance = document.getElementById("finalDistance");
+const bestScore = document.getElementById("bestScore");
 
 
-
-const loadingFill =
-document.getElementById("loadingFill");
-
-
-const loadingPercent =
-document.getElementById("loadingPercent");
+const healthFill = document.getElementById("healthFill");
+const healthText = document.getElementById("healthText");
 
 
-
-const gameOverScreen =
-document.getElementById("gameOver");
-
-
-const redeployButton =
-document.getElementById("redeploy");
-
-
-
-const scoreText =
-document.getElementById("score");
-
-
-const distanceText =
-document.getElementById("distance");
-
-
-const finalScore =
-document.getElementById("finalScore");
-
-
-const finalDistance =
-document.getElementById("finalDistance");
-
-
-const bestScore =
-document.getElementById("bestScore");
-
-
-
-const healthFill =
-document.getElementById("healthFill");
-
-
-const healthText =
-document.getElementById("healthText");
-
-
-
-const muteButton =
-document.getElementById("muteButton");
-
-
-
+const muteButton = document.getElementById("muteButton");
 
 
 
 
 // ==========================================================
-// CANVAS
+// VIRTUAL GAME RESOLUTION
 // ==========================================================
+
+const GAME_WIDTH = 1280;
+const GAME_HEIGHT = 720;
+
+
+let scale = 1;
+let offsetX = 0;
+let offsetY = 0;
+
 
 
 function resize(){
+
 
     const dpr =
     window.devicePixelRatio || 1;
@@ -122,12 +76,14 @@ function resize(){
     window.innerHeight * dpr;
 
 
+
     canvas.style.width =
     window.innerWidth + "px";
 
 
     canvas.style.height =
     window.innerHeight + "px";
+
 
 
     ctx.setTransform(
@@ -138,6 +94,31 @@ function resize(){
         0,
         0
     );
+
+
+
+    scale =
+    Math.min(
+
+        window.innerWidth / GAME_WIDTH,
+
+        window.innerHeight / GAME_HEIGHT
+
+    );
+
+
+
+    offsetX =
+    (window.innerWidth -
+    GAME_WIDTH * scale) / 2;
+
+
+
+    offsetY =
+    (window.innerHeight -
+    GAME_HEIGHT * scale) / 2;
+
+
 
 }
 
@@ -156,12 +137,9 @@ resize();
 
 
 
-
-
 // ==========================================================
 // GAME STATES
 // ==========================================================
-
 
 const STATE = {
 
@@ -178,10 +156,8 @@ const STATE = {
 };
 
 
-
 let gameState =
 STATE.BOOT;
-
 
 
 
@@ -190,7 +166,6 @@ STATE.BOOT;
 // ==========================================================
 // INTRO SYSTEM
 // ==========================================================
-
 
 let loadingProgress = 0;
 
@@ -210,7 +185,6 @@ const bootMessages = [
 ];
 
 
-
 let messageIndex = 0;
 
 
@@ -226,8 +200,7 @@ function startBootSequence(){
     setInterval(()=>{
 
 
-        loadingProgress += 1;
-
+        loadingProgress++;
 
 
         loadingFill.style.width =
@@ -240,8 +213,8 @@ function startBootSequence(){
 
 
         if(
-        loadingProgress % 20 === 0 &&
-        messageIndex < bootMessages.length
+            loadingProgress % 20 === 0 &&
+            messageIndex < bootMessages.length
         ){
 
             systemStatus.innerText =
@@ -268,12 +241,10 @@ function startBootSequence(){
             false;
 
 
-
         }
 
 
     },40);
-
 
 
 }
@@ -296,25 +267,16 @@ function showTitleScreen(){
     startBootSequence();
 
 
-
 }
-
-
 
 
 
 introVideo.addEventListener(
 "ended",
-()=>{
-
-    showTitleScreen();
-
-});
+showTitleScreen
+);
 
 
-
-
-// fallback if video missing
 
 setTimeout(()=>{
 
@@ -327,7 +289,6 @@ if(gameState===STATE.BOOT){
 
 
 },10000);
-
 
 
 
@@ -365,9 +326,7 @@ runs:0
 
 
 
-
 function saveData(){
-
 
 localStorage.setItem(
 
@@ -377,10 +336,7 @@ JSON.stringify(savedData)
 
 );
 
-
 }
-
-
 
 
 
@@ -415,35 +371,21 @@ function loadSprite(name,path){
 
 
 loadSprite(
-
 "hover",
-
 "assets/characters/quackers/hover_01.png"
-
 );
 
 
-
 loadSprite(
-
 "up",
-
 "assets/characters/quackers/flap_up.png"
-
 );
-
 
 
 loadSprite(
-
 "down",
-
 "assets/characters/quackers/flap_down.png"
-
 );
-
-
-
 
 
 
@@ -474,7 +416,6 @@ const corridorSpeed = 220;
 
 
 
-
 // ==========================================================
 // PLAYER
 // ==========================================================
@@ -483,10 +424,10 @@ const corridorSpeed = 220;
 const player = {
 
 
-x:window.innerWidth * 0.25,
+x:GAME_WIDTH * 0.22,
 
 
-y:400,
+y:GAME_HEIGHT / 2,
 
 
 velocity:0,
@@ -505,38 +446,6 @@ sprite:"hover"
 
 
 };
-
-
-
-
-
-
-
-// ==========================================================
-// GAME DATA
-// ==========================================================
-
-
-let score = 0;
-
-
-let distance = 0;
-
-
-let health = 100;
-
-
-let muted = false;
-
-
-
-let last = 0;
-
-
-let particles = [];
-
-
-let shake = 0;
 // ==========================================================
 // INPUT
 // ==========================================================
@@ -549,8 +458,10 @@ function flap(){
         return;
 
 
+
     player.velocity =
     player.flap;
+
 
 
     player.sprite =
@@ -565,13 +476,14 @@ function flap(){
 
 
 
-
 window.addEventListener(
+
 "keydown",
-(e)=>{
+
+e=>{
 
 
-    if(e.code === "Space"){
+    if(e.code==="Space"){
 
         flap();
 
@@ -579,7 +491,7 @@ window.addEventListener(
 
 
 
-    if(e.code === "KeyM"){
+    if(e.code==="KeyM"){
 
         toggleMute();
 
@@ -591,13 +503,15 @@ window.addEventListener(
 
 
 
+
 canvas.addEventListener(
+
 "pointerdown",
-()=>{
 
-    flap();
+flap
 
-});
+);
+
 
 
 
@@ -621,17 +535,22 @@ playButton.onclick = ()=>{
     STATE.PLAYING;
 
 
+
     resetGame();
+
 
 
     last =
     performance.now();
 
 
+
     requestAnimationFrame(loop);
 
 
 };
+
+
 
 
 
@@ -647,12 +566,15 @@ redeployButton.onclick = ()=>{
     resetGame();
 
 
+
     gameState =
     STATE.PLAYING;
 
 
+
     last =
     performance.now();
+
 
 
     requestAnimationFrame(loop);
@@ -665,25 +587,26 @@ redeployButton.onclick = ()=>{
 
 
 
+
+
+
 function resetGame(){
 
 
     score = 0;
 
-
     distance = 0;
-
 
     health = 100;
 
 
 
     player.y =
-    canvas.height / 2;
+    GAME_HEIGHT / 2;
+
 
 
     player.velocity = 0;
-
 
     player.rotation = 0;
 
@@ -691,7 +614,9 @@ function resetGame(){
     corridorX = 0;
 
 
+
 }
+
 
 
 
@@ -712,10 +637,15 @@ function toggleMute(){
 
 
     muteButton.innerText =
+
     muted
+
     ?
+
     "🔇"
+
     :
+
     "🔊";
 
 
@@ -732,7 +662,6 @@ toggleMute;
 
 
 
-
 // ==========================================================
 // GAME LOOP
 // ==========================================================
@@ -742,7 +671,9 @@ function loop(time){
 
 
     if(gameState !== STATE.PLAYING)
+
         return;
+
 
 
 
@@ -774,6 +705,8 @@ function loop(time){
 
 
 
+
+
 // ==========================================================
 // UPDATE
 // ==========================================================
@@ -783,15 +716,13 @@ function update(dt){
 
 
 
-    // corridor movement
-
     corridorX -=
     corridorSpeed * dt;
 
 
 
     if(
-    corridorX <= -corridor.width
+    corridorX <= -GAME_WIDTH
     ){
 
         corridorX = 0;
@@ -801,9 +732,6 @@ function update(dt){
 
 
 
-
-
-    // distance and score
 
 
     distance +=
@@ -820,8 +748,6 @@ function update(dt){
 
 
 
-    // player physics
-
 
     player.velocity +=
     player.gravity * dt;
@@ -835,7 +761,10 @@ function update(dt){
 
 
 
+
+
     player.rotation =
+
     Math.max(
 
         -.5,
@@ -858,14 +787,13 @@ function update(dt){
 
     if(player.velocity < 0){
 
-        player.sprite =
-        "up";
+        player.sprite = "up";
 
     }
+
     else{
 
-        player.sprite =
-        "down";
+        player.sprite = "down";
 
     }
 
@@ -873,14 +801,14 @@ function update(dt){
 
 
 
-
-
-    // death zones
 
 
     if(
-    player.y <= 0 ||
-    player.y >= canvas.height
+
+        player.y <= 0 ||
+
+        player.y >= GAME_HEIGHT
+
     ){
 
         triggerGameOver();
@@ -901,16 +829,19 @@ function update(dt){
 
 
 
+
+
     if(shake > 0){
 
-        shake -=
-        dt * 40;
+        shake -= dt * 40;
 
     }
 
 
 
 }
+
+
 
 
 
@@ -926,29 +857,45 @@ function update(dt){
 function updateHUD(){
 
 
+
     scoreText.innerText =
+
     formatNumber(score);
 
 
 
+
     distanceText.innerText =
+
     formatNumber(
+
         Math.floor(distance)
+
     )
-    + " M";
+
+    +
+
+    " M";
+
+
 
 
 
     healthFill.style.width =
+
     health + "%";
+
+
 
 
 
     healthText.innerText =
+
     health + "%";
 
 
 }
+
 
 
 
@@ -963,13 +910,19 @@ function formatNumber(num){
         Math.floor(num)
 
     )
+
     .padStart(
+
         6,
+
         "0"
+
     );
 
 
 }
+
+
 
 
 
@@ -985,10 +938,13 @@ function formatNumber(num){
 function triggerGameOver(){
 
 
+
     if(
     gameState === STATE.GAME_OVER
     )
+
     return;
+
 
 
 
@@ -1004,24 +960,21 @@ function triggerGameOver(){
 
 
 
+
     if(score > savedData.highScore){
 
-        savedData.highScore =
-        score;
+        savedData.highScore = score;
 
     }
-
 
 
 
 
     if(distance > savedData.bestDistance){
 
-        savedData.bestDistance =
-        distance;
+        savedData.bestDistance = distance;
 
     }
-
 
 
 
@@ -1032,23 +985,40 @@ function triggerGameOver(){
 
 
 
+
+
     finalScore.innerText =
+
     formatNumber(score);
 
 
 
+
+
     finalDistance.innerText =
+
     formatNumber(
+
         Math.floor(distance)
+
     )
-    + " M";
+
+    +
+
+    " M";
+
+
 
 
 
     bestScore.innerText =
+
     formatNumber(
+
         savedData.highScore
+
     );
+
 
 
 
@@ -1067,6 +1037,8 @@ function triggerGameOver(){
 
 
 
+
+
 // ==========================================================
 // PARTICLES
 // ==========================================================
@@ -1075,40 +1047,48 @@ function triggerGameOver(){
 function boostParticles(){
 
 
-    for(
-    let i=0;
-    i<15;
-    i++
-    ){
+    for(let i=0;i<15;i++){
+
 
 
         particles.push({
 
 
             x:
-            player.x - 60,
+
+            player.x - 40,
 
 
             y:
-            player.y + 20,
+
+            player.y + 10,
+
 
 
             vx:
+
             -Math.random()*250-50,
 
 
+
             vy:
+
             (Math.random()-0.5)*180,
 
 
+
             size:
-            Math.random()*8+4,
+
+            Math.random()*6+3,
+
 
 
             life:1
 
 
+
         });
+
 
 
     }
@@ -1125,15 +1105,22 @@ function boostParticles(){
 
 
 
+
+
 function updateParticles(dt){
 
 
 
     for(
+
     let i=particles.length-1;
+
     i>=0;
+
     i--
+
     ){
+
 
 
         let p =
@@ -1142,28 +1129,27 @@ function updateParticles(dt){
 
 
         p.x +=
+
         p.vx * dt;
 
 
 
         p.y +=
+
         p.vy * dt;
 
 
 
         p.life -=
-        dt * 2;
 
+        dt*2;
 
 
 
 
         if(p.life <= 0){
 
-            particles.splice(
-            i,
-            1
-            );
+            particles.splice(i,1);
 
         }
 
@@ -1178,13 +1164,15 @@ function updateParticles(dt){
 
 
 
+
+
+
 function drawParticles(){
 
 
 
-    for(
-    const p of particles
-    ){
+    for(const p of particles){
+
 
 
         ctx.globalAlpha =
@@ -1193,11 +1181,18 @@ function drawParticles(){
 
 
         ctx.fillStyle =
+
         p.life > .5
+
         ?
+
         "#00f0ff"
+
         :
+
         "#ff5500";
+
+
 
 
 
@@ -1224,6 +1219,7 @@ function drawParticles(){
         ctx.fill();
 
 
+
     }
 
 
@@ -1231,7 +1227,10 @@ function drawParticles(){
     ctx.globalAlpha = 1;
 
 
+
 }
+
+
 
 
 
@@ -1247,8 +1246,29 @@ function drawParticles(){
 function draw(){
 
 
-
     ctx.save();
+
+
+
+    ctx.translate(
+
+        offsetX,
+
+        offsetY
+
+    );
+
+
+
+    ctx.scale(
+
+        scale,
+
+        scale
+
+    );
+
+
 
 
 
@@ -1266,6 +1286,8 @@ function draw(){
 
 
     }
+
+
 
 
 
@@ -1294,6 +1316,13 @@ function draw(){
 
 
 
+
+
+// ==========================================================
+// CORRIDOR
+// ==========================================================
+
+
 function drawCorridor(){
 
 
@@ -1309,9 +1338,9 @@ function drawCorridor(){
 
         0,
 
-        canvas.width,
+        GAME_WIDTH,
 
-        canvas.height
+        GAME_HEIGHT
 
     );
 
@@ -1320,7 +1349,9 @@ function drawCorridor(){
 
 
 
+
     if(!corridor.complete)
+
         return;
 
 
@@ -1337,13 +1368,11 @@ function drawCorridor(){
 
         0,
 
-        corridor.width,
+        GAME_WIDTH,
 
-        canvas.height
+        GAME_HEIGHT
 
     );
-
-
 
 
 
@@ -1353,13 +1382,13 @@ function drawCorridor(){
 
         corridor,
 
-        corridorX + corridor.width,
+        corridorX + GAME_WIDTH,
 
         0,
 
-        corridor.width,
+        GAME_WIDTH,
 
-        canvas.height
+        GAME_HEIGHT
 
     );
 
@@ -1373,6 +1402,13 @@ function drawCorridor(){
 
 
 
+
+
+// ==========================================================
+// PLAYER
+// ==========================================================
+
+
 function drawPlayer(){
 
 
@@ -1383,15 +1419,15 @@ function drawPlayer(){
 
 
     if(!img.complete)
+
         return;
 
 
 
 
 
+
     ctx.save();
-
-
 
 
 
@@ -1417,26 +1453,25 @@ function drawPlayer(){
 
 
 
-    const size =
-Math.min(
-canvas.width,
-canvas.height
-) * 0.22;
+
+    const size = 150;
 
 
-ctx.drawImage(
 
-    img,
+    ctx.drawImage(
 
-    -size/2,
+        img,
 
-    -size/2,
+        -size/2,
 
-    size,
+        -size/2,
 
-    size
+        size,
 
-);
+        size
+
+    );
+
 
 
 
@@ -1447,6 +1482,7 @@ ctx.drawImage(
 
 
 }
+
 
 
 

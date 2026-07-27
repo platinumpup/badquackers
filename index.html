@@ -9,22 +9,32 @@
 
 <title>Sgt. Quackers: Burn Another Day</title>
 
+
 <link rel="stylesheet" href="style.css">
+
+
 <link rel="manifest" href="manifest.json">
 
+
 <meta name="theme-color" content="#0b0f19">
+
+
 </head>
+
 
 
 <body>
 
 
-<!-- ==========================
+
+
+<!-- ==================================
      INTRO VIDEO
-========================== -->
+================================== -->
 
 
 <div id="introScreen">
+
 
     <video
         id="introVideo"
@@ -40,6 +50,7 @@
 
     </video>
 
+
 </div>
 
 
@@ -47,19 +58,22 @@
 
 
 
-<!-- ==========================
-     TITLE SCREEN
-========================== -->
+
+<!-- ==================================
+     TITLE / LOADING SCREEN
+================================== -->
 
 
 <div id="titleScreen">
 
 
+
     <img
         id="splashGif"
         src="assets/splash.gif"
-        alt="Sgt Quackers Intro"
+        alt="Sgt Quackers"
     >
+
 
 
 
@@ -75,6 +89,7 @@
 
 
 
+
         <div id="loadingContainer">
 
 
@@ -85,6 +100,7 @@
 
 
             </div>
+
 
 
 
@@ -126,7 +142,7 @@
 
         <br>
 
-        A StrangeCulture Creative Studios Production
+        StrangeCulture Creative Studios
 
 
     </div>
@@ -141,12 +157,38 @@
 
 
 
-<!-- ==========================
-     GAME HUD
-========================== -->
+
+<!-- ==================================
+     ROTATE WARNING
+================================== -->
+
+
+<div id="rotateWarning">
+
+
+    ROTATE DEVICE
+
+    <br>
+
+    TACTICAL FLIGHT REQUIRES LANDSCAPE MODE
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- ==================================
+     HUD
+================================== -->
 
 
 <div id="hud">
+
 
 
     <div id="topLeftHud">
@@ -169,7 +211,7 @@
 
         <div>
 
-            DISTANCE:
+            DIST:
 
             <span id="distance">
 
@@ -182,6 +224,8 @@
 
 
     </div>
+
+
 
 
 
@@ -205,6 +249,8 @@
 
 
 
+
+
     <div id="weaponHud">
 
 
@@ -218,7 +264,9 @@
 
         <div id="weapon">
 
+
             TACTICAL RIFLE
+
 
         </div>
 
@@ -226,7 +274,8 @@
 
         <div>
 
-            LEVEL
+
+            LVL
 
             <span id="weaponLevel">
 
@@ -245,6 +294,7 @@
 
 
 
+
     <div id="healthHud">
 
 
@@ -253,6 +303,7 @@
             HULL
 
         </div>
+
 
 
 
@@ -266,11 +317,14 @@
 
 
 
+
+
         <div id="healthText">
 
             100%
 
         </div>
+
 
 
     </div>
@@ -280,11 +334,15 @@
 
 
 
+
     <button id="muteButton">
+
 
         🔊
 
+
     </button>
+
 
 
 
@@ -297,9 +355,10 @@
 
 
 
-<!-- ==========================
+
+<!-- ==================================
      GAME CANVAS
-========================== -->
+================================== -->
 
 
 <canvas id="game"></canvas>
@@ -311,12 +370,14 @@
 
 
 
-<!-- ==========================
+
+<!-- ==================================
      GAME OVER
-========================== -->
+================================== -->
 
 
 <div id="gameOver">
+
 
 
     <h1>
@@ -327,11 +388,17 @@
 
 
 
+
+
     <h2 id="gameOverSubtitle">
+
 
         No one could help put out your fire
 
+
     </h2>
+
+
 
 
 
@@ -379,11 +446,16 @@
 
 
 
+
+
     <button id="redeploy">
+
 
         BURN ANOTHER DAY
 
+
     </button>
+
 
 
 
@@ -395,25 +467,48 @@
 
 
 
+
 <script src="game.js"></script>
+
+
+
 <script>
+
 
 if("serviceWorker" in navigator){
 
+
     window.addEventListener(
-    "load",
-    ()=>{
 
-        navigator.serviceWorker.register(
-            "service-worker.js"
-        );
+        "load",
 
-    });
+        ()=>{
+
+
+            navigator.serviceWorker.register(
+
+                "service-worker.js"
+
+            );
+
+
+        }
+
+
+    );
+
 
 }
 
+
+
 </script>
 
+
+
+
+
 </body>
+
 
 </html>
