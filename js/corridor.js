@@ -88,11 +88,13 @@ class Corridor {
             return;
         }
 
+        // Use the actual canvas drawing surface size so render math
+        // matches what is drawn, including devicePixelRatio adjustments.
         const gameWidth =
-            Config.GAME.WIDTH;
+            (this.ctx && this.ctx.canvas && this.ctx.canvas.width) || Config.GAME.WIDTH;
 
         const gameHeight =
-            Config.GAME.HEIGHT;
+            (this.ctx && this.ctx.canvas && this.ctx.canvas.height) || Config.GAME.HEIGHT;
 
         const scale =
             Math.max(
@@ -173,14 +175,21 @@ class Corridor {
             this.calculateRenderSize();
         }
 
+        // Use actual canvas size for drawing/fill so things line up
+        const gameWidth =
+            (ctx && ctx.canvas && ctx.canvas.width) || Config.GAME.WIDTH;
+
+        const gameHeight =
+            (ctx && ctx.canvas && ctx.canvas.height) || Config.GAME.HEIGHT;
+
         ctx.fillStyle =
             "#05070a";
 
         ctx.fillRect(
             0,
             0,
-            Config.GAME.WIDTH,
-            Config.GAME.HEIGHT
+            gameWidth,
+            gameHeight
         );
 
 
@@ -225,7 +234,7 @@ class Corridor {
         if (
             this.scrollX +
             this.renderWidth * 2 <
-            Config.GAME.WIDTH
+            gameWidth
         ) {
 
             ctx.drawImage(
@@ -250,14 +259,20 @@ class Corridor {
 
     drawLoading(ctx) {
 
+        const gameWidth =
+            (ctx && ctx.canvas && ctx.canvas.width) || Config.GAME.WIDTH;
+
+        const gameHeight =
+            (ctx && ctx.canvas && ctx.canvas.height) || Config.GAME.HEIGHT;
+
         ctx.fillStyle =
             "#080c12";
 
         ctx.fillRect(
             0,
             0,
-            Config.GAME.WIDTH,
-            Config.GAME.HEIGHT
+            gameWidth,
+            gameHeight
         );
 
         ctx.fillStyle =
@@ -276,9 +291,9 @@ class Corridor {
 
             "INITIALIZING FLIGHT CORRIDOR",
 
-            Config.GAME.WIDTH / 2,
+            gameWidth / 2,
 
-            Config.GAME.HEIGHT / 2
+            gameHeight / 2
         );
     }
 
@@ -289,13 +304,16 @@ class Corridor {
 
     getBounds() {
 
+        const gameHeight =
+            (this.ctx && this.ctx.canvas && this.ctx.canvas.height) || Config.GAME.HEIGHT;
+
         return {
 
             ceiling:
                 Config.WORLD.CEILING_HEIGHT,
 
             floor:
-                Config.GAME.HEIGHT -
+                gameHeight -
                 Config.WORLD.GROUND_HEIGHT
         };
     }

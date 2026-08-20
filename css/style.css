@@ -216,6 +216,9 @@ body {
 
     color: white;
 
+    /* keep a little padding so big type doesn't hit the viewport edges */
+    padding: 3vh 4vw;
+
     pointer-events: none;
 
     z-index: 20;
@@ -244,6 +247,12 @@ body {
     text-shadow:
         0 4px 12px
         rgba(0, 0, 0, 0.9);
+
+    /* prevent overflow on narrow screens */
+    max-width: 92vw;
+    word-break: break-word;
+    line-height: 0.92;
+    padding: 0 4vw;
 }
 
 .subtitle {
@@ -258,10 +267,13 @@ body {
     letter-spacing: 8px;
 
     opacity: 0.8;
+
+    max-width: 92vw;
+    word-break: break-word;
 }
 
 .ready-text {
-    margin-top: 60px;
+    margin-top: clamp(20px, 8vh, 60px);
 
     font-size: 22px;
 
@@ -275,6 +287,9 @@ body {
 
     animation:
         readyPulse 1.8s ease-in-out infinite;
+
+    /* allow tapping the prompt while keeping rest of overlay non-blocking */
+    pointer-events: auto;
 }
 
 @keyframes readyPulse {
@@ -306,6 +321,10 @@ body {
     font-weight: 900;
 
     letter-spacing: 5px;
+
+    max-width: 92vw;
+    word-break: break-word;
+    line-height: 0.92;
 }
 
 .game-over-subtitle {
@@ -321,15 +340,19 @@ body {
 .results {
     display: flex;
 
-    gap: 45px;
+    gap: clamp(16px, 4vw, 45px);
 
-    margin-top: 45px;
+    margin-top: clamp(18px, 6vh, 45px);
+
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .results div {
     display: flex;
 
     flex-direction: column;
+    align-items: center;
 }
 
 .results span {
@@ -343,7 +366,7 @@ body {
 .results strong {
     margin-top: 5px;
 
-    font-size: 30px;
+    font-size: clamp(20px, 4vw, 30px);
 }
 
 
@@ -481,4 +504,11 @@ body {
     color: white;
     cursor: pointer;
     pointer-events: auto;
+}
+
+/* Small screens: stack results vertically and reduce spacing */
+@media (max-width: 520px) {
+    .results { flex-direction: column; gap: 14px; }
+    .title { letter-spacing: 3px; }
+    .subtitle { letter-spacing: 5px; }
 }
