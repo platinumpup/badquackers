@@ -1,0 +1,1 @@
+﻿window.SCOREBOARD_CONFIG = {"apiKey":"AIzaSyAQpQN3Egn21-lBx1rKP1sibGUC3pXYHe0","authDomain":"sgtquackers-6d249.firebaseapp.com","projectId":"sgtquackers-6d249","storageBucket":"sgtquackers-6d249.firebasestorage.app","messagingSenderId":"624830801873","appId":"1:624830801873:web:485b13ba272b59960ea2f0","measurementId":"G-FZ5TJRXFXC"};

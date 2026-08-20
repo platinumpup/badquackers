@@ -2,501 +2,219 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width,
+                 initial-scale=1.0,
+                 maximum-scale=1.0,
+                 user-scalable=no"
+    >
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta
+        name="theme-color"
+        content="#05070a"
+    >
 
+    <title>Sgt. Quackers: Burn Another Day</title>
 
-<title>Sgt. Quackers: Burn Another Day</title>
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
 
-
-<link rel="stylesheet" href="style.css">
-
-
-<link rel="manifest" href="manifest.json">
-
-
-<meta name="theme-color" content="#0b0f19">
-
-
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 </head>
-
-
 
 <body>
 
+    <main id="game-container">
+
+        <canvas
+            id="gameCanvas"
+            width="1376"
+            height="768"
+        ></canvas>
 
 
+        <!-- HUD -->
 
-<!-- ==========================================
-     INTRO CINEMATIC
-========================================== -->
+        <div id="hud">
+
+            <div id="score-container">
+
+                <span class="hud-label">
+                    SCORE
+                </span>
+
+                <span id="score">
+                    0
+                </span>
+
+            </div>
 
 
-<div id="introScreen">
+            <div id="distance-container">
+
+                <span class="hud-label">
+                    DISTANCE
+                </span>
+
+                <span id="distance">
+                    0 m
+                </span>
+
+            </div>
 
 
-    <video
-        id="introVideo"
-        autoplay
-        muted
-        playsinline
-    >
+            <!-- STAMINA -->
 
-        <source
-            src="assets/splash.mp4"
-            type="video/mp4"
+            <div id="stamina-container">
+
+                <span class="hud-label">
+                    STAMINA
+                </span>
+
+                <div id="stamina-bar">
+
+                    <span class="stamina-segment"></span>
+                    <span class="stamina-segment"></span>
+                    <span class="stamina-segment"></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- READY SCREEN -->
+
+        <div
+            id="ready-screen"
+            class="screen"
         >
 
-    </video>
+            <div class="title">
+                SGT. QUACKERS
+            </div>
 
+            <div class="subtitle">
+                BURN ANOTHER DAY
+            </div>
 
-</div>
+            <!-- USERNAME ENTRY (local only) -->
+            <div class="username-entry" id="username-entry">
+                <label for="username-input" class="username-label"></label>
+                <div style="display:flex; gap:8px; align-items:center; margin-top:10px;">
+                    <input id="username-input" type="text" maxlength="24" placeholder="username" />
+                    <button id="username-save" type="button">SAVE</button>
+                </div>
+                <div id="username-display" style="margin-top:8px; font-size:14px; opacity:0.85;"></div>
+            </div>
 
-
-
-
-
-
-
-
-<!-- ==========================================
-     MAIN SPLASH
-========================================== -->
-
-
-<div id="titleScreen">
-
-
-
-    <img
-        id="splashGif"
-        src="assets/splash.gif"
-        alt="Sgt. Quackers"
-    >
-
-
-
-
-
-    <!-- Tactical boot panel -->
-
-    <div id="bootOverlay">
-
-
-        <div id="systemStatus">
-
-            BOOTING SYSTEM...
+            <div class="ready-text">
+                TAP TO START
+            </div>
 
         </div>
 
 
+        <!-- GAME OVER SCREEN -->
+
+        <div
+            id="game-over-screen"
+            class="screen hidden"
+        >
+
+            <div class="game-over-title">
+                MISSION FAILED
+            </div>
+
+            <div class="game-over-subtitle">
+                TODAY YOU BURN!
+            </div>
+
+            <div class="results">
+
+                <div>
+
+                    <span>
+                        SCORE
+                    </span>
+
+                    <strong id="final-score">
+                        0
+                    </strong>
+
+                </div>
 
 
-        <div id="loadingContainer">
+                <div>
+
+                    <span>
+                        DISTANCE
+                    </span>
+
+                    <strong id="final-distance">
+                        0 m
+                    </strong>
+
+                </div>
 
 
-            <div id="loadingBar">
+                <div>
 
+                    <span>
+                        BEST
+                    </span>
 
-                <div id="loadingFill"></div>
+                    <strong id="best-score">
+                        0
+                    </strong>
 
+                </div>
 
             </div>
 
-
-
-            <div id="loadingPercent">
-
-                0%
-
+            <!-- GLOBAL LEADERBOARD -->
+            <div id="leaderboard-container" style="margin-top: 20px; width: 90%; max-width: 520px;">
+                <div style="font-size:14px; letter-spacing:3px; opacity:0.8; margin-bottom:8px;">GLOBAL LEADERBOARD</div>
+                <div id="leaderboard" style="background: rgba(255,255,255,0.03); padding:12px; border-radius:8px; max-height:220px; overflow:auto;">
+                    <div style="opacity:0.6; font-size:13px;">Loading...</div>
+                </div>
             </div>
 
+            <button
+                id="redeploy-button"
+                type="button"
+            >
+                REDEPLOY
+            </button>
 
         </div>
 
-
-    </div>
-
-
-
-
-
-
-
-
-    <button
-        id="play"
-        disabled
-    >
-
-        INITIATE MISSION
-
-
-    </button>
-
-
-
-
-
-
-
-    <div id="copyright">
-
-
-        © 2026 PlatinumBoy
-
-        <br>
-
-        StrangeCulture Creative Studios
-
-
-    </div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- ==========================================
-     LANDSCAPE WARNING
-========================================== -->
-
-
-<div id="rotateWarning">
-
-
-    ROTATE DEVICE
-
-    <br>
-
-    TACTICAL FLIGHT REQUIRES LANDSCAPE MODE
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- ==========================================
-     GAME HUD
-========================================== -->
-
-
-<div id="hud">
-
-
-
-    <div id="topLeftHud">
-
-
-        SCORE:
-
-        <span id="score">
-
-            000000
-
-        </span>
-
-
-        <br>
-
-
-        DIST:
-
-        <span id="distance">
-
-            000000 M
-
-        </span>
-
-
-
-    </div>
-
-
-
-
-
-
-
-    <div id="sectorHud">
-
-
-        SECTOR
-
-        <span id="sector">
-
-            01
-
-        </span>
-
-
-    </div>
-
-
-
-
-
-
-
-    <div id="weaponHud">
-
-
-        WEAPON
-
-        <br>
-
-
-        <span id="weapon">
-
-            TACTICAL RIFLE
-
-        </span>
-
-
-        <br>
-
-
-        LVL
-
-        <span id="weaponLevel">
-
-            1
-
-        </span>
-
-
-
-    </div>
-
-
-
-
-
-
-
-    <div id="healthHud">
-
-
-        HULL
-
-
-        <div id="healthBar">
-
-
-            <div id="healthFill"></div>
-
-
-        </div>
-
-
-
-
-        <span id="healthText">
-
-            100%
-
-        </span>
-
-
-
-    </div>
-
-
-
-
-
-
-
-
-    <button id="muteButton">
-
-        🔊
-
-    </button>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- ==========================================
-     GAME CANVAS
-========================================== -->
-
-
-<canvas id="game"></canvas>
-
-
-
-
-
-
-
-
-
-<!-- ==========================================
-     GAME OVER
-========================================== -->
-
-
-<div id="gameOver">
-
-
-
-    <h1>
-
-        GAME OVER
-
-    </h1>
-
-
-
-
-
-    <h2 id="gameOverSubtitle">
-
-        No one could help put out your fire
-
-    </h2>
-
-
-
-
-
-
-
-    <div id="results">
-
-
-        SCORE:
-
-        <span id="finalScore">
-
-            000000
-
-        </span>
-
-
-        <br>
-
-
-        DISTANCE:
-
-        <span id="finalDistance">
-
-            000000 M
-
-        </span>
-
-
-        <br>
-
-
-        BEST:
-
-        <span id="bestScore">
-
-            000000
-
-        </span>
-
-
-
-    </div>
-
-
-
-
-
-
-
-    <button id="redeploy">
-
-
-        BURN ANOTHER DAY
-
-
-    </button>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<script src="game.js"></script>
-
-
-
-
-<script>
-
-
-if("serviceWorker" in navigator){
-
-
-window.addEventListener(
-
-"load",
-
-()=>{
-
-
-navigator.serviceWorker.register(
-
-"service-worker.js"
-
-);
-
-
-}
-
-);
-
-
-}
-
-
-
-</script>
-
-
-
-
+    </main>
+
+<!-- scoreboard config (your firebase keys) -->
+<script src="js/scoreboard-config.js"></script>
+
+<!-- Firebase compat SDKs (simpler, reliable for browsers) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<!-- Scoreboard wrapper that uses compat SDK -->
+<script src="js/scoreboard-compat.js"></script>
+
+<!-- Then your regular game scripts -->
+<script src="js/config.js"></script>
+<script src="js/player.js"></script>
+<script src="js/corridor.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 
