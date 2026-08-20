@@ -1,7 +1,7 @@
 // ==========================================================
 // Sgt. Quackers: Burn Another Day
 // service-worker.js
-// v0.3 Cyber Cache System
+// v0.4 Cyber Cache System (Updated for refactored structure)
 // ==========================================================
 
 
@@ -10,8 +10,7 @@
 
 
 const CACHE_NAME =
-"sgt-quackers-v3";
-
+"sgt-quackers-v4";
 
 
 
@@ -25,57 +24,90 @@ const ASSETS = [
 "./index.html",
 
 
-"./style.css",
-
-
-"./game.js",
+"./css/style.css",
 
 
 "./manifest.json",
 
 
-
-
-// splash assets
-
-"./assets/splash.gif",
-
-"./assets/splash.mp4",
+"./firebase.json",
 
 
 
 
-// corridor
+// JavaScript - Core Game
 
-"./assets/corridor.png",
+"./js/config.js",
 
+"./js/player.js",
 
+"./js/corridor.js",
 
+"./js/obstacles.js",
 
-// character sprites
-
-"./assets/characters/quackers/hover_01.png",
-
-"./assets/characters/quackers/flap_up.png",
-
-"./assets/characters/quackers/flap_down.png",
+"./js/main.js",
 
 
 
 
-// icons
+// JavaScript - Optional Modules
 
-"./assets/icons/icon-192.png",
+"./js/audio.js",
 
-"./assets/icons/icon-512.png"
+"./js/collision.js",
+
+"./js/particles.js",
+
+"./js/storage.js",
+
+"./js/hud.js",
+
+"./js/game.js",
+
+
+
+
+// Firebase & Scoreboard
+
+"./js/scoreboard-config.js",
+
+"./js/scoreboard-compat.js",
+
+"./js/scoreboard.js",
+
+
+
+
+// Player Assets
+
+"./assets/player/quackers_master.PNG",
+
+"./assets/player/hover_01.png",
+
+"./assets/player/flap_up.png",
+
+"./assets/player/flap_down.png",
+
+"./assets/player/analyze_sprites.py",
+
+
+
+
+// Environment Assets
+
+"./assets/environment/corridor.png",
+
+
+
+
+// External CDN Resources (Firebase - optional, can fail gracefully)
+
+"https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js",
+
+"https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"
 
 
 ];
-
-
-
-
-
 
 
 
@@ -113,6 +145,18 @@ event=>{
 
         })
 
+        .catch(error=>{
+
+            console.error(
+
+                "Cache install failed:",
+
+                error
+
+            );
+
+        })
+
 
 
     );
@@ -124,11 +168,6 @@ event=>{
 
 
 });
-
-
-
-
-
 
 
 
@@ -166,6 +205,15 @@ event=>{
                     ){
 
 
+                        console.log(
+
+                            "Deleting old cache:",
+
+                            key
+
+                        );
+
+
                         return caches.delete(
 
                             key
@@ -194,11 +242,6 @@ event=>{
 
 
 });
-
-
-
-
-
 
 
 
@@ -249,10 +292,98 @@ event=>{
             .then(response=>{
 
 
+                // Cache successful responses
+
+                if(
+
+                    response &&
+
+                    response.status === 200
+
+                ){
+
+
+                    const responseClone =
+
+                        response.clone();
+
+
+                    caches.open(
+
+                        CACHE_NAME
+
+                    )
+
+                    .then(cache=>{
+
+
+                        cache.put(
+
+                            event.request,
+
+                            responseClone
+
+                        );
+
+
+                    });
+
+
+                }
+
+
                 return response;
 
 
+            })
+
+            .catch(error=>{
+
+
+                console.error(
+
+                    "Fetch failed for:",
+
+                    event.request.url,
+
+                    error
+
+                );
+
+
+                // Optionally return fallback
+
+                return new Response(
+
+                    "Offline",
+
+                    {
+
+                        status: 503,
+
+                        statusText: "Service Unavailable"
+
+                    }
+
+                );
+
+
             });
+
+
+
+        })
+
+        .catch(error=>{
+
+
+            console.error(
+
+                "Cache match failed:",
+
+                error
+
+            );
 
 
 
