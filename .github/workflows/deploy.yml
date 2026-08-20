@@ -1,0 +1,41 @@
+name: Build & Deploy (inject scoreboard config)
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create scoreboard-config from secret
+        run: |
+          mkdir -p tmp_deploy/js
+          cat > tmp_deploy/js/scoreboard-config.js <<'EOF'
+          window.SCOREBOARD_CONFIG = {
+            apiKey: "${{ secrets.API_KEY }}",
+            // Keep the values below as placeholders; replace if you want different project fields
+            authDomain: "sgtquackers-6d249.firebaseapp.com",
+            projectId: "sgtquackers-6d249",
+            storageBucket: "sgtquackers-6d249.appspot.com"
+          };
+          EOF
+
+      - name: Copy site files into deploy folder
+        run: |
+          # Copy everything except git metadata and workflow files
+          rsync -av --exclude='.git' --exclude='.github' --exclude='tmp_deploy' ./ tmp_deploy/
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./tmp_deploy
+          publish_branch: gh-pages
