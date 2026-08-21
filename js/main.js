@@ -2285,7 +2285,7 @@ function drawTutorials() {
 
         case TutorialStage.SURVIVE:
             text =
-                "SURVIVE THE LONGEST";
+                "SURVIVE.";
             duration =
                 SURVIVE_TUTORIAL_DURATION;
             break;
