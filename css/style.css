@@ -567,3 +567,32 @@ body {
 #leaderboard ol > li.rank-1 { background: linear-gradient(90deg, rgba(255,240,120,0.05), rgba(255,200,40,0.02)); font-weight: 800; }
 #leaderboard ol > li.rank-2 { background: rgba(255,255,255,0.02); font-weight:700; }
 #leaderboard ol > li.rank-3 { background: rgba(255,255,255,0.01); font-weight:700; }
+
+/* Title hero floating */
+#title-hero {
+  width: auto;
+  height: 140px;
+  margin-bottom: 14px;
+  pointer-events: none;
+  transform-origin: center;
+  animation: titleFloat 1.8s ease-in-out infinite;
+  image-rendering: optimizeQuality;
+}
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Scale/hover for title hero */
+#title-hero:hover,
+#title-hero:active {
+  transform: translateY(-10px) scale(1.04);
+}
+
+/* Blur backdrop when game-over screen shown */
+#game-over-screen:not(.hidden) {
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  pointer-events: auto;
+}
