@@ -1,0 +1,16 @@
+/* Additional styles for title hero floating */
+
+#title-hero {
+  width: auto;
+  height: 140px;
+  margin-bottom: 14px;
+  pointer-events: none;
+  transform-origin: center;
+  animation: titleFloat 1.8s ease-in-out infinite;
+  image-rendering: optimizeQuality;
+}
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}

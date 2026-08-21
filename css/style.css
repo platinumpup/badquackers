@@ -512,3 +512,58 @@ body {
     .title { letter-spacing: 3px; }
     .subtitle { letter-spacing: 5px; }
 }
+
+/* Additional UI: stamina segment pulse and shield indicator */
+
+@keyframes stamina-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 8px rgba(70,190,255,0.6); }
+  50% { transform: scale(1.08); box-shadow: 0 0 18px rgba(70,190,255,0.9); }
+  100% { transform: scale(1); box-shadow: 0 0 8px rgba(70,190,255,0.6); }
+}
+
+.stamina-segment.active {
+  animation: stamina-pulse 420ms ease;
+}
+
+#stamina-shield-indicator {
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 11;
+  display: none;
+  width: 120px;
+  height: 18px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(90,205,255,0.12), rgba(120,240,255,0.06));
+  border: 1px solid rgba(90,205,255,0.18);
+  box-shadow: 0 0 12px rgba(50,160,255,0.18);
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: rgba(200,255,255,0.95);
+}
+
+#stamina-shield-indicator.visible {
+  display: flex;
+  animation: fade-in 220ms ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0px); }
+}
+
+/* Leaderboard top-3 highlight */
+#leaderboard ol > li {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+#leaderboard ol > li.rank-1 { background: linear-gradient(90deg, rgba(255,240,120,0.05), rgba(255,200,40,0.02)); font-weight: 800; }
+#leaderboard ol > li.rank-2 { background: rgba(255,255,255,0.02); font-weight:700; }
+#leaderboard ol > li.rank-3 { background: rgba(255,255,255,0.01); font-weight:700; }
