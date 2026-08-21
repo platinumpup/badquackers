@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width,
+                 initial-scale=1.0,
+                 maximum-scale=1.0,
+                 user-scalable=no"
+    >
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sgt. Quackers">
+
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/icon-512.png">
+    <meta
+        name="theme-color"
+        content="#05070a"
+    >
+
+    <title>Sgt. Quackers: Burn Another Day</title>
+
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+</head>
+
+<body>
+
+    <main id="game-container">
+
+        <canvas
+            id="gameCanvas"
+            width="1376"
+            height="768"
+        ></canvas>
+
+
+        <!-- HUD -->
+
+        <div id="hud">
+
+            <div id="score-container">
+
+                <span class="hud-label">
+                    SCORE
+                </span>
+
+                <span id="score">
+                    0
+                </span>
+
+            </div>
+
+
+            <div id="distance-container">
+
+                <span class="hud-label">
+                    DISTANCE
+                </span>
+
+                <span id="distance">
+                    0 m
+                </span>
+
+            </div>
+
+
+            <!-- STAMINA -->
+
+            <div id="stamina-container">
+
+                <span class="hud-label">
+                    STAMINA
+                </span>
+
+                <div id="stamina-bar">
+
+                    <span class="stamina-segment"></span>
+                    <span class="stamina-segment"></span>
+                    <span class="stamina-segment"></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- READY SCREEN -->
+
+        <div
+            id="ready-screen"
+            class="screen"
+        >
+
+            <div class="title">
+                SGT. QUACKERS
+            </div>
+
+            <div class="subtitle">
+                BURN ANOTHER DAY
+            </div>
+
+            <!-- USERNAME ENTRY (local only) -->
+            <div class="username-entry" id="username-entry">
+                <label for="username-input" class="username-label"></label>
+                <div style="display:flex; gap:8px; align-items:center; margin-top:10px;">
+                    <input id="username-input" type="text" maxlength="24" placeholder="username" />
+                    <button id="username-save" type="button">SAVE</button>
+                </div>
+                <div id="username-display" style="margin-top:8px; font-size:14px; opacity:0.85;"></div>
+            </div>
+
+            <div class="ready-text">
+                TAP TO START
+            </div>
+
+        </div>
+
+
+        <!-- GAME OVER SCREEN -->
+
+        <div
+            id="game-over-screen"
+            class="screen hidden"
+        >
+
+            <div class="game-over-title">
+                MISSION FAILED
+            </div>
+
+            <div class="game-over-subtitle">
+                TODAY YOU BURN!
+            </div>
+
+            <div class="results">
+
+                <div>
+
+                    <span>
+                        SCORE
+                    </span>
+
+                    <strong id="final-score">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        DISTANCE
+                    </span>
+
+                    <strong id="final-distance">
+                        0 m
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        BEST
+                    </span>
+
+                    <strong id="best-score">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <!-- GLOBAL LEADERBOARD -->
+            <div id="leaderboard-container" style="margin-top: 20px; width: 90%; max-width: 520px;">
+                <div style="font-size:14px; letter-spacing:3px; opacity:0.8; margin-bottom:8px;">GLOBAL LEADERBOARD</div>
+                <div id="leaderboard" style="background: rgba(255,255,255,0.03); padding:12px; border-radius:8px; max-height:220px; overflow:auto;">
+                    <div style="opacity:0.6; font-size:13px;">Loading...</div>
+                </div>
+            </div>
+
+            <button
+                id="redeploy-button"
+                type="button"
+            >
+                REDEPLOY
+            </button>
+
+        </div>
+
+    </main>
+
+<!-- scoreboard config (your firebase keys) -->
+<script src="js/scoreboard-config.js"></script>
+
+<!-- Firebase compat SDKs (simpler, reliable for browsers) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<!-- Scoreboard wrapper that uses compat SDK -->
+<script src="js/scoreboard-compat.js"></script>
+
+<!-- Then your regular game scripts -->
+<script src="js/config.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/player.js"></script>
+<script src="js/corridor.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+
+</html>

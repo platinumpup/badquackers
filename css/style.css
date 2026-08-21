@@ -1,0 +1,514 @@
+/* ==========================================================
+   Sgt. Quackers: Burn Another Day
+   css/style.css
+   ========================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #05070a;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+body {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* ==========================================================
+   GAME CONTAINER
+   ========================================================== */
+
+#game-container {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background: #05070a;
+}
+
+
+/* ==========================================================
+   GAME CANVAS
+   ========================================================== */
+
+#gameCanvas {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: min(
+        100vw,
+        calc(100vh * 1376 / 768)
+    );
+
+    height: min(
+        100vh,
+        calc(100vw * 768 / 1376)
+    );
+
+    aspect-ratio: 1376 / 768;
+
+    transform:
+        translate(-50%, -50%);
+
+    display: block;
+
+    touch-action: none;
+}
+
+
+/* ==========================================================
+   HUD
+   ========================================================== */
+
+#hud {
+    position: absolute;
+
+    top: 25px;
+    left: 30px;
+    right: 30px;
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-start;
+
+    pointer-events: none;
+
+    color: white;
+
+    z-index: 10;
+}
+
+#score-container,
+#distance-container,
+#stamina-container {
+    display: flex;
+
+    flex-direction: column;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.hud-label {
+    font-size: 12px;
+
+    letter-spacing: 3px;
+
+    opacity: 0.7;
+}
+
+#score,
+#distance {
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+
+/* ==========================================================
+   STAMINA BAR
+   ========================================================== */
+
+#stamina-container {
+    position: absolute;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    align-items: center;
+}
+
+#stamina-bar {
+    display: flex;
+
+    gap: 6px;
+
+    margin-top: 6px;
+}
+
+.stamina-segment {
+    display: block;
+
+    width: 30px;
+    height: 5px;
+
+    border-radius: 3px;
+
+    background:
+        rgba(80, 190, 255, 0.18);
+
+    border:
+        1px solid
+        rgba(120, 215, 255, 0.28);
+
+    box-shadow:
+        0 0 4px
+        rgba(70, 190, 255, 0.15);
+
+    transition:
+        background 0.12s ease,
+        box-shadow 0.12s ease,
+        opacity 0.12s ease;
+}
+
+.stamina-segment.active {
+    background:
+        rgba(90, 205, 255, 0.95);
+
+    border-color:
+        rgba(190, 245, 255, 0.95);
+
+    box-shadow:
+        0 0 8px
+        rgba(70, 190, 255, 0.8),
+        0 0 16px
+        rgba(50, 150, 255, 0.35);
+}
+
+
+/* ==========================================================
+   SCREENS
+   ========================================================== */
+
+.screen {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    color: white;
+
+    /* keep a little padding so big type doesn't hit the viewport edges */
+    padding: 3vh 4vw;
+
+    pointer-events: none;
+
+    z-index: 20;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* ==========================================================
+   READY SCREEN
+   ========================================================== */
+
+.title {
+    font-size: clamp(
+        35px,
+        7vw,
+        80px
+    );
+
+    font-weight: 900;
+
+    letter-spacing: 6px;
+
+    text-shadow:
+        0 4px 12px
+        rgba(0, 0, 0, 0.9);
+
+    /* prevent overflow on narrow screens */
+    max-width: 92vw;
+    word-break: break-word;
+    line-height: 0.92;
+    padding: 0 4vw;
+}
+
+.subtitle {
+    margin-top: 8px;
+
+    font-size: clamp(
+        16px,
+        2vw,
+        26px
+    );
+
+    letter-spacing: 8px;
+
+    opacity: 0.8;
+
+    max-width: 92vw;
+    word-break: break-word;
+}
+
+.ready-text {
+    margin-top: clamp(20px, 8vh, 60px);
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    letter-spacing: 4px;
+
+    text-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.9);
+
+    animation:
+        readyPulse 1.8s ease-in-out infinite;
+
+    /* allow tapping the prompt while keeping rest of overlay non-blocking */
+    pointer-events: auto;
+}
+
+@keyframes readyPulse {
+
+    0%,
+    100% {
+        opacity: 0.65;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-2px);
+    }
+}
+
+
+/* ==========================================================
+   GAME OVER
+   ========================================================== */
+
+.game-over-title {
+    font-size: clamp(
+        36px,
+        6vw,
+        72px
+    );
+
+    font-weight: 900;
+
+    letter-spacing: 5px;
+
+    max-width: 92vw;
+    word-break: break-word;
+    line-height: 0.92;
+}
+
+.game-over-subtitle {
+    margin-top: 10px;
+
+    font-size: 18px;
+
+    letter-spacing: 4px;
+
+    opacity: 0.75;
+}
+
+.results {
+    display: flex;
+
+    gap: clamp(16px, 4vw, 45px);
+
+    margin-top: clamp(18px, 6vh, 45px);
+
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.results div {
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+}
+
+.results span {
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    opacity: 0.6;
+}
+
+.results strong {
+    margin-top: 5px;
+
+    font-size: clamp(20px, 4vw, 30px);
+}
+
+
+/* ==========================================================
+   REDEPLOY BUTTON
+   ========================================================== */
+
+#redeploy-button {
+    margin-top: 50px;
+
+    padding: 15px 45px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.5);
+
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    letter-spacing: 4px;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+#redeploy-button:hover {
+    background:
+        rgba(255, 255, 255, 0.18);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* ==========================================================
+   PORTRAIT WARNING
+   ========================================================== */
+
+@media (orientation: portrait) {
+
+    #game-container::after {
+        content: "ROTATE DEVICE";
+
+        position: absolute;
+
+        inset: 0;
+
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+        background: #05070a;
+
+        color: white;
+
+        font-size: 18px;
+
+        letter-spacing: 4px;
+
+        z-index: 999;
+    }
+}
+
+
+/* ==========================================================
+   SMALL LANDSCAPE PHONES
+   ========================================================== */
+
+@media (
+    orientation: landscape
+) and (
+    max-height: 500px
+) {
+
+    #hud {
+        top: 12px;
+
+        left: 18px;
+        right: 18px;
+    }
+
+    .hud-label {
+        font-size: 9px;
+
+        letter-spacing: 2px;
+    }
+
+    #score,
+    #distance {
+        font-size: 20px;
+    }
+
+    .stamina-segment {
+        width: 22px;
+        height: 4px;
+    }
+}
+
+/* ==========================================================
+   Username input styling
+   ========================================================== */
+
+.username-entry {
+    margin-top: 18px;
+    text-align: center;
+    pointer-events: auto;
+}
+
+.username-entry input#username-input {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.03);
+    color: white;
+    min-width: 180px;
+}
+
+.username-entry button#username-save {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color: white;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+/* Small screens: stack results vertically and reduce spacing */
+@media (max-width: 520px) {
+    .results { flex-direction: column; gap: 14px; }
+    .title { letter-spacing: 3px; }
+    .subtitle { letter-spacing: 5px; }
+}
